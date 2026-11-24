@@ -46,6 +46,7 @@ Prettier 负责基础排版。ESLint Stylistic 检查块注释前、多行声明
 | 文档                               | 内容                           |
 | ---------------------------------- | ------------------------------ |
 | [AGENTS.md](AGENTS.md)             | 开发约束、组件版本和验证要求   |
+| [PRODUCT.md](PRODUCT.md)           | 首版读者、产品目标和长期约束   |
 | [REQUIREMENTS.md](REQUIREMENTS.md) | 产品范围、页面和内容发布规则   |
 | [DESIGN.md](DESIGN.md)             | 布局、排版、主题和组件选择     |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | 模块职责、渲染和部署方式       |
