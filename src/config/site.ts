@@ -3,6 +3,13 @@ export const site = {
   author: '付小晨',
   homeHeading: '前端开发笔记',
   description: '记录前端工程、组件库和开发工具的实践。',
+  filings: [
+    { label: '赣 ICP 备 2024026230 号', href: 'https://beian.miit.gov.cn' },
+    {
+      label: '赣公网安备 36100002000386 号',
+      href: 'https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=36100002000386',
+    },
+  ],
 }
 
 export const topics = [

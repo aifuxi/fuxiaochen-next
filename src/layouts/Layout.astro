@@ -104,9 +104,18 @@ const navigation = [
       </LayoutHeader>
       <slot />
       <LayoutFooter tagName="footer" class="site-footer">
-        <div class="site-shell site-bar">
+        <div class="site-shell site-bar footer-bar">
           <Text type="secondary">{site.author}</Text>
-          <a class="site-link icon-label" href="#top">
+          <ul class="footer-filings" role="list" aria-label="网站备案">
+            {site.filings.map(({ label, href }) => (
+              <li>
+                <a class="site-link" href={href}>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a class="site-link icon-label footer-top" href="#top">
             <IconArrowUp aria-hidden="true" />
             返回顶部
           </a>
@@ -125,3 +134,37 @@ const navigation = [
     </script>
   </body>
 </html>
+
+<style>
+  .footer-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    padding-block: 12px;
+  }
+
+  .footer-filings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  }
+
+  .footer-top {
+    justify-self: end;
+  }
+
+  @media (max-width: 36rem) {
+    .footer-bar {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+
+    .footer-top {
+      justify-self: center;
+    }
+  }
+</style>
