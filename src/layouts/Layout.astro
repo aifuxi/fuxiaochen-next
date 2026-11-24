@@ -10,18 +10,19 @@ import IconSun from '@aifuxi/semi-icons-vue/icons/IconSun'
 import { Button } from '@aifuxi/semi-ui-vue/button'
 import { Layout, LayoutFooter, LayoutHeader } from '@aifuxi/semi-ui-vue/layout'
 import { Text } from '@aifuxi/semi-ui-vue/typography'
+import BrandLogo from '../assets/brand-logo.svg'
 import ModernTheme from '../components/ModernTheme.astro'
 import { site } from '../config/site'
 import '../styles/site.css'
 
 interface Props {
-  title: string
+  title?: string
   description: string
   noindex?: boolean
 }
 
 const { title, description, noindex } = Astro.props
-const pageTitle = title + ' · ' + site.author
+const pageTitle = title ? `${title} · ${site.name}` : site.name
 const canonical = !noindex && Astro.site && new URL(Astro.url.pathname, Astro.site)
 const currentPath = Astro.url.pathname.replace(/\/?$/, '/')
 
@@ -39,6 +40,9 @@ const navigation = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
     <ModernTheme />
     <script is:inline>
       try {
@@ -51,6 +55,7 @@ const navigation = [
       }
     </script>
     <meta name="description" content={description} />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
@@ -70,8 +75,9 @@ const navigation = [
     <Layout class="site-layout">
       <LayoutHeader tagName="header" class="site-header">
         <div class="site-shell site-bar">
-          <a class="site-brand" href="/" aria-label={site.author + ' 首页'}>
-            {site.author}
+          <a class="site-brand" href="/" aria-label={`${site.name}，返回首页`}>
+            <BrandLogo aria-hidden="true" focusable="false" />
+            <span>{site.name}</span>
           </a>
           <div class="site-header-actions">
             <nav aria-label="主导航">

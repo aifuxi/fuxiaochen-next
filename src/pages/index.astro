@@ -18,13 +18,13 @@ import { getPublicPosts, toPostSummary } from '../lib/posts'
 const posts = (await getPublicPosts()).map(toPostSummary)
 ---
 
-<Layout title={site.title} description={site.description}>
+<Layout description={site.description}>
   <main class="site-shell site-main" id="main" tabindex="-1">
     <section class="home-opening" aria-labelledby="home-title">
       <Space vertical align="start" spacing="loose">
         <Space vertical align="start" spacing="tight">
           <Title id="home-title" heading={1}>
-            {site.title}
+            {site.homeHeading}
           </Title>
           <Paragraph type="secondary">{site.description}</Paragraph>
         </Space>

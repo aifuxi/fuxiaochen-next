@@ -61,11 +61,16 @@ body {
 .site-brand {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   min-block-size: 44px;
   color: var(--semi-color-text-0);
   font-size: 1rem;
   font-weight: 700;
   text-decoration: none;
+}
+
+.site-brand svg {
+  flex: none;
 }
 
 .site-header-actions,

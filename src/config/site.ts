@@ -1,6 +1,7 @@
 export const site = {
-  author: 'fuxiaochen',
-  title: '前端开发笔记',
+  name: '付小晨',
+  author: '付小晨',
+  homeHeading: '前端开发笔记',
   description: '记录前端工程、组件库和开发工具的实践。',
 }
 

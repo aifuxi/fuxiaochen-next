@@ -3,11 +3,11 @@ import '@aifuxi/semi-theme-default/card.css'
 import { Card } from '@aifuxi/semi-ui-vue/card'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
 import ProjectSource from '../components/ProjectSource.vue'
-import { project } from '../config/site'
+import { project, site } from '../config/site'
 import Layout from '../layouts/Layout.astro'
 ---
 
-<Layout title="开源项目" description="浏览 fuxiaochen 的开源项目。">
+<Layout title="开源项目" description={`浏览 ${site.author} 的开源项目。`}>
   <main class="site-shell site-main content-page" id="main" tabindex="-1">
     <div class="page-stack">
       <Title heading={1}>开源项目</Title>
