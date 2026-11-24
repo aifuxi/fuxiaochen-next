@@ -57,3 +57,7 @@ Prettier 负责基础排版。ESLint Stylistic 检查块注释前、多行声明
 | [SEO.md](SEO.md)                   | 搜索可见性、性能目标和验收方法 |
 | [ROADMAP.md](ROADMAP.md)           | 开发顺序和各阶段验收条件       |
 | [BOOTSTRAP.md](BOOTSTRAP.md)       | 第一个实现任务及验收范围       |
+
+## 许可证
+
+本项目采用 [MIT 许可证](LICENSE)。
