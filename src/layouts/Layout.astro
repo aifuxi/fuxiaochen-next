@@ -107,9 +107,10 @@ const navigation = [
         <div class="site-shell site-bar footer-bar">
           <Text type="secondary">{site.author}</Text>
           <ul class="footer-filings" role="list" aria-label="网站备案">
-            {site.filings.map(({ label, href }) => (
+            {site.filings.map(({ label, href, icon }) => (
               <li>
-                <a class="site-link" href={href}>
+                <a class:list={['site-link', { 'icon-label': icon }]} href={href}>
+                  {icon && <img src={icon.src} width="14" height="14" alt="" />}
                   {label}
                 </a>
               </li>

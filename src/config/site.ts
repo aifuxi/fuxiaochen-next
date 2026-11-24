@@ -1,3 +1,5 @@
+import policeFilingIcon from '../assets/police-filing.png'
+
 export const site = {
   name: '付小晨',
   author: '付小晨',
@@ -8,6 +10,7 @@ export const site = {
     {
       label: '赣公网安备 36100002000386 号',
       href: 'https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=36100002000386',
+      icon: policeFilingIcon,
     },
   ],
 }
