@@ -27,7 +27,11 @@ mise run dev
 
 WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启动前先检查 IDE 的运行会话和后台服务状态。
 
-首版计划通过 GitHub Actions 构建静态产物，由 Caddy 提供服务。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
+## 手动构建
+
+工作流进入仓库默认分支后，在 GitHub 的 **Actions → 构建静态站点 → Run workflow** 选择要构建的分支并运行。构建成功后，在该次运行页面的 **Artifacts** 下载 `fuxiaochen-next-dist` ZIP。
+
+将 ZIP 解压到服务器的站点根目录，确保 `index.html` 和 `_astro/` 位于根目录下。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
 
 ## 添加文章
 

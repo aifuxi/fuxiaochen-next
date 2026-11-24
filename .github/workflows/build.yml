@@ -1,0 +1,32 @@
+name: 构建静态站点
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: 安装 mise 工具链
+        uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # v5.3.0
+
+      - name: 安装依赖
+        run: mise run install
+
+      - name: 构建静态站点
+        run: mise run build
+
+      - name: 上传静态产物
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: fuxiaochen-next-dist
+          path: dist/
+          if-no-files-found: error
