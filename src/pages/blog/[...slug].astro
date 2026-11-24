@@ -17,6 +17,7 @@ interface Props {
 const { post } = Astro.props
 const { Content, headings } = await render(post)
 const { title, summary, publishedAt, topic } = toPostSummary(post)
+const { tags = [] } = post.data
 const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
 ---
 
@@ -43,6 +44,13 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
           )}
         </div>
         <Paragraph type="secondary">{summary}</Paragraph>
+        {tags.length > 0 && (
+          <ul class="article-tags" role="list" aria-label="文章标签">
+            {tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        )}
       </header>
       {sections.length > 0 && (
         <nav class="article-toc" aria-labelledby="article-toc-title">
@@ -88,6 +96,24 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
     gap: 4px 16px;
     color: var(--semi-color-text-1);
     font-variant-numeric: tabular-nums;
+  }
+
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .article-tags li {
+    padding: 2px 8px;
+    border-radius: var(--semi-border-radius-medium);
+    color: var(--semi-color-text-1);
+    background: var(--semi-color-fill-0);
+    font-size: 0.875rem;
+    overflow-wrap: anywhere;
   }
 
   .article-toc {

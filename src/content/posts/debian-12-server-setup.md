@@ -3,6 +3,7 @@ title: 'Debian 12 服务器初始化：从 APT 换源到开发环境配置'
 summary: '在 Debian 12 上用 Nala 筛选 APT 镜像，配置 UTF-8 和上海时区，再安装 Oh My Zsh 并用 mise 批量安装开发工具。'
 publishedAt: 2026-11-24
 topic: tooling
+tags: [Debian 12, 服务器初始化, APT, Zsh, mise]
 ---
 
 我的服务器运行的是 **Debian 12（Bookworm）**。这篇文章记录了新系统装好后，我用到的几项配置：

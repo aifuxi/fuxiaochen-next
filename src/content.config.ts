@@ -11,6 +11,7 @@ export const collections = {
       summary: z.string().trim().min(1),
       publishedAt: z.coerce.date(),
       topic: z.enum(topics.map((topic) => topic.id)).optional(),
+      tags: z.array(z.string().trim().min(1)).optional(),
       draft: z.boolean().default(false),
     }),
   }),
