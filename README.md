@@ -41,6 +41,8 @@ Prettier 负责基础排版。ESLint Stylistic 检查块注释前、多行声明
 
 ## 项目文档
 
+项目的 Codex 技能由 `skills-lock.json` 锁定。在新检出中运行 `mise exec -- npx -y skills install --agent codex --frozen-lockfile` 恢复 `semi-ui-vue` 和 `impeccable`。
+
 | 文档                               | 内容                           |
 | ---------------------------------- | ------------------------------ |
 | [AGENTS.md](AGENTS.md)             | 开发约束、组件版本和验证要求   |

@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "skills": {
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "commit": "b49177d32788f2dc585c42831d845dacf1ebed2c",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "08bd5bf141cb507f46bd8347890cd985865606f15adf88295ed3a73bc9ad5d96"
+    },
+    "semi-ui-vue": {
+      "source": "aifuxi/semi-ui-vue",
+      "ref": "master",
+      "commit": "25e0988271ccc03e0ffa3f87f0967d9f0cfe6ef9",
+      "sourceType": "github",
+      "skillPath": "skills/semi-ui-vue/SKILL.md",
+      "computedHash": "42a24676c64f76fb8c961e06183953d69a52c4578ff8b7ff5f949831de7231c0"
+    }
+  }
+}

@@ -9,7 +9,14 @@ import tseslint from 'typescript-eslint'
 const codeFiles = ['**/*.{js,mjs,cjs,ts,mts,cts,vue,astro}']
 
 export default defineConfig(
-  globalIgnores(['.astro/', '.codegraph/', '.codex/', 'coverage/', 'dist/']),
+  globalIgnores([
+    '.agents/skills/{impeccable,semi-ui-vue}/',
+    '.astro/',
+    '.codegraph/',
+    '.codex/',
+    'coverage/',
+    'dist/',
+  ]),
   {
     files: codeFiles,
     extends: [js.configs.recommended],
