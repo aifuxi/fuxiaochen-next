@@ -15,7 +15,7 @@
 ## 开发与验证
 
 - 用 [mise.toml](mise.toml) 统一工具版本和任务入口。启动前先运行 `mise run dev:status` 或检查 WebStorm 的运行会话，已运行时直接复用。
-- 开发服务使用后台模式 `astro dev --background`，通过 `mise run dev` 启动。使用 `mise run dev:status`、`mise run dev:logs` 和 `mise run dev:stop` 管理该服务。
+- 开发服务使用后台模式 `astro dev --background`，通过 `mise run dev` 启动。沿用 [Astro 配置](astro.config.mjs) 中的固定端口。使用 `mise run dev:status`、`mise run dev:logs` 和 `mise run dev:stop` 管理该服务。
 - 构建使用 `mise run build`。渲染或组件变更按影响验证产物 HTML、客户端激活、明暗主题和交互。纯文档变更检查链接、命令和仓库现状。
 - 提交前运行 `mise run check` 检查全项目的代码和格式。代码自动修复与格式化分别使用 `mise run lint:fix` 和 `mise run format`。
 - 提交标题使用 Angular 风格的 `type(scope): 中文描述`，scope 和正文可按需填写。Husky 在提交前处理暂存文件，并用 commitlint 校验提交信息。
