@@ -1,21 +1,29 @@
 ---
-import { Card } from '@aifuxi/semi-ui-vue/card'
-import { Space } from '@aifuxi/semi-ui-vue/space'
 import { Title } from '@aifuxi/semi-ui-vue/typography'
+import PageEmpty from '../../components/PageEmpty.vue'
 import PostList from '../../components/PostList.vue'
 import Layout from '../../layouts/Layout.astro'
-import { getPublicPosts, toSearchPost } from '../../lib/posts'
+import { getPublicPosts, toPostSummary } from '../../lib/posts'
 
 const posts = await getPublicPosts()
 ---
 
 <Layout title="文章" description="浏览已发布的前端开发笔记。">
   <main class="site-shell site-main content-page" id="main" tabindex="-1">
-    <Space vertical align="start" spacing="loose">
+    <div class="page-stack">
       <Title heading={1}>文章</Title>
-      <Card>
-        <PostList posts={posts.map(toSearchPost)} />
-      </Card>
-    </Space>
+      {posts.length ? (
+        <PostList posts={posts.map(toPostSummary)} />
+      ) : (
+        <PageEmpty title="暂无已发布文章">
+          <a class="site-action" href="/categories/">
+            浏览主题
+          </a>
+          <a class="site-action" href="/projects/">
+            查看开源项目
+          </a>
+        </PageEmpty>
+      )}
+    </div>
   </main>
 </Layout>

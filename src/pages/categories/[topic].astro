@@ -1,11 +1,11 @@
 ---
-import { Card } from '@aifuxi/semi-ui-vue/card'
-import { Space } from '@aifuxi/semi-ui-vue/space'
+import IconArrowLeft from '@aifuxi/semi-icons-vue/icons/IconArrowLeft'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
+import PageEmpty from '../../components/PageEmpty.vue'
 import PostList from '../../components/PostList.vue'
 import { topics } from '../../config/site'
 import Layout from '../../layouts/Layout.astro'
-import { getPublicPosts, toSearchPost } from '../../lib/posts'
+import { getPublicPosts, toPostSummary } from '../../lib/posts'
 
 export function getStaticPaths() {
   return topics.map((topic) => ({ params: { topic: topic.id }, props: { topic } }))
@@ -21,12 +21,26 @@ const posts = (await getPublicPosts()).filter(({ data }) => data.topic === topic
 
 <Layout title={topic.title} description={topic.summary}>
   <main class="site-shell site-main content-page" id="main" tabindex="-1">
-    <Space vertical align="start" spacing="loose">
-      <Title heading={1}>{topic.title}</Title>
-      <Paragraph type="secondary">{topic.summary}</Paragraph>
-      <Card>
-        <PostList posts={posts.map(toSearchPost)} empty="这个主题暂无已发布文章。" />
-      </Card>
-    </Space>
+    <div class="page-stack">
+      <header class="page-heading">
+        <div>
+          <a class="site-link icon-label" href="/categories/">
+            <IconArrowLeft aria-hidden="true" />
+            全部主题
+          </a>
+        </div>
+        <Title heading={1}>{topic.title}</Title>
+        <Paragraph type="secondary">{topic.summary}</Paragraph>
+      </header>
+      {posts.length ? (
+        <PostList posts={posts.map(toPostSummary)} />
+      ) : (
+        <PageEmpty title="这个主题暂无已发布文章">
+          <a class="site-action" href="/blog/">
+            浏览全部文章
+          </a>
+        </PageEmpty>
+      )}
+    </div>
   </main>
 </Layout>

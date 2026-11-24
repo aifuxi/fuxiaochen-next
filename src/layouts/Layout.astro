@@ -1,15 +1,14 @@
 ---
 import '@aifuxi/semi-theme-default/base.css'
 import '@aifuxi/semi-theme-default/button.css'
-import '@aifuxi/semi-theme-default/card.css'
-import '@aifuxi/semi-theme-default/grid.css'
+import '@aifuxi/semi-theme-default/icon.css'
 import '@aifuxi/semi-theme-default/layout.css'
-import '@aifuxi/semi-theme-default/list.css'
-import '@aifuxi/semi-theme-default/space.css'
 import '@aifuxi/semi-theme-default/typography.css'
+import IconArrowUp from '@aifuxi/semi-icons-vue/icons/IconArrowUp'
+import IconMoon from '@aifuxi/semi-icons-vue/icons/IconMoon'
+import IconSun from '@aifuxi/semi-icons-vue/icons/IconSun'
 import { Button } from '@aifuxi/semi-ui-vue/button'
 import { Layout, LayoutFooter, LayoutHeader } from '@aifuxi/semi-ui-vue/layout'
-import { Space } from '@aifuxi/semi-ui-vue/space'
 import { Text } from '@aifuxi/semi-ui-vue/typography'
 import { site } from '../config/site'
 import '../styles/site.css'
@@ -17,14 +16,17 @@ import '../styles/site.css'
 interface Props {
   title: string
   description: string
+  noindex?: boolean
 }
 
-const { title, description } = Astro.props
+const { title, description, noindex } = Astro.props
 const pageTitle = title + ' · ' + site.author
-const canonical = Astro.site && new URL(Astro.url.pathname, Astro.site)
+const canonical = !noindex && Astro.site && new URL(Astro.url.pathname, Astro.site)
+const currentPath = Astro.url.pathname.replace(/\/?$/, '/')
 
 const navigation = [
   { href: '/blog/', label: '文章' },
+  { href: '/categories/', label: '主题' },
   { href: '/projects/', label: '项目' },
   { href: '/about/', label: '关于' },
 ]
@@ -49,6 +51,7 @@ const navigation = [
     <meta name="description" content={description} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical.href} />}
     <title>{pageTitle}</title>
   </head>
@@ -62,38 +65,51 @@ const navigation = [
     <Text class="skip-link" link={{ href: '#main' }}>
       跳到正文
     </Text>
-    <Layout>
-      <LayoutHeader tagName="header">
+    <Layout class="site-layout">
+      <LayoutHeader tagName="header" class="site-header">
         <div class="site-shell site-bar">
-          <Text link={{ href: '/', 'aria-label': site.author + ' 首页' }} strong>
+          <a class="site-brand" href="/" aria-label={site.author + ' 首页'}>
             {site.author}
-          </Text>
-          <Space>
+          </a>
+          <div class="site-header-actions">
             <nav aria-label="主导航">
-              <Space wrap>
+              <ul class="site-nav">
                 {navigation.map(({ href, label }) => (
-                  <Text
-                    link={{
-                      href,
-                      'aria-current': Astro.url.pathname.startsWith(href) ? 'page' : undefined,
-                    }}
-                  >
-                    {label}
-                  </Text>
+                  <li>
+                    <a
+                      href={href}
+                      aria-current={
+                        currentPath === href
+                          ? 'page'
+                          : currentPath.startsWith(href)
+                            ? 'location'
+                            : undefined
+                      }
+                    >
+                      {label}
+                    </a>
+                  </li>
                 ))}
-              </Space>
+              </ul>
             </nav>
             <Button id="theme-toggle" class="theme-toggle" theme="outline" type="tertiary" hidden>
-              <span id="theme-label">深色</span>
+              <span class="icon-label">
+                <IconSun class="light-icon" aria-hidden="true" />
+                <IconMoon class="dark-icon" aria-hidden="true" />
+                <span id="theme-label">深色</span>
+              </span>
             </Button>
-          </Space>
+          </div>
         </div>
       </LayoutHeader>
       <slot />
-      <LayoutFooter tagName="footer">
+      <LayoutFooter tagName="footer" class="site-footer">
         <div class="site-shell site-bar">
           <Text type="secondary">{site.author}</Text>
-          <Text link={{ href: '#top' }}>返回顶部</Text>
+          <a class="site-link icon-label" href="#top">
+            <IconArrowUp aria-hidden="true" />
+            返回顶部
+          </a>
         </div>
       </LayoutFooter>
     </Layout>
@@ -114,6 +130,8 @@ const navigation = [
         if (label) {
           label.textContent = dark ? '浅色' : '深色'
         }
+
+        button?.setAttribute('aria-label', dark ? '切换到浅色主题' : '切换到深色主题')
       }
 
       if (button) {

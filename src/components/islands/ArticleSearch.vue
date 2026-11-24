@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import '@aifuxi/semi-theme-default/empty.css'
+import IconSearch from '@aifuxi/semi-icons-vue/icons/IconSearch'
 import { Button } from '@aifuxi/semi-ui-vue/button'
+import { Empty } from '@aifuxi/semi-ui-vue/empty'
 import { Input } from '@aifuxi/semi-ui-vue/input'
 import { List, ListItem } from '@aifuxi/semi-ui-vue/list'
 import { Modal } from '@aifuxi/semi-ui-vue/modal'
 import { Text } from '@aifuxi/semi-ui-vue/typography'
 import { computed, ref } from 'vue'
-import type { SearchPost } from '../../lib/posts'
+import type { PostSummary } from '../../lib/posts'
 
-const { posts } = defineProps<{ posts: SearchPost[] }>()
+const { posts } = defineProps<{ posts: PostSummary[] }>()
 const searchButton = ref<InstanceType<typeof Button> | null>(null)
 const visible = ref(false)
 const query = ref('')
@@ -32,9 +35,7 @@ const status = computed(() => {
     return '近期文章'
   }
 
-  return matches.value.length
-    ? matches.value.length + ' 篇文章'
-    : '没有找到相关文章，试试其他关键词。'
+  return matches.value.length ? matches.value.length + ' 篇文章' : '未找到文章，试试其他关键词。'
 })
 
 function openSearch() {
@@ -57,6 +58,7 @@ function restoreSearchFocus() {
       size="large"
       aria-haspopup="dialog"
     >
+      <template #icon><IconSearch aria-hidden="true" /></template>
       搜索文章
     </Button>
   </form>
@@ -80,7 +82,10 @@ function restoreSearchFocus() {
       placeholder="标题、摘要或主题"
       auto-focus
     />
-    <Text component="p" type="secondary" role="status">{{ status }}</Text>
+    <div class="search-status" role="status">
+      <Empty v-if="posts.length && !matches.length" class="search-empty" :description="status" />
+      <Text v-else component="p" type="secondary">{{ status }}</Text>
+    </div>
     <List v-if="matches.length" split>
       <ListItem v-for="post in matches" :key="post.href">
         <Text :link="{ href: post.href }">{{ post.title }}</Text>
@@ -88,3 +93,21 @@ function restoreSearchFocus() {
     </List>
   </Modal>
 </template>
+
+<style scoped>
+.search-status {
+  margin-block-start: 12px;
+}
+
+.search-empty {
+  padding-block: 12px 4px;
+}
+
+.search-empty :deep(.semi-empty-image) {
+  display: none;
+}
+
+.search-empty :deep(.semi-empty-content) {
+  margin-block-start: 0;
+}
+</style>

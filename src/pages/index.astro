@@ -1,18 +1,21 @@
 ---
-import '@aifuxi/semi-theme-default/input.css'
-import '@aifuxi/semi-theme-default/icon.css'
+import '@aifuxi/semi-theme-default/card.css'
+import '@aifuxi/semi-theme-default/grid.css'
 import '@aifuxi/semi-theme-default/icon-button.css'
+import '@aifuxi/semi-theme-default/input.css'
+import '@aifuxi/semi-theme-default/list.css'
 import '@aifuxi/semi-theme-default/modal.css'
 import '@aifuxi/semi-theme-default/shared/foundation-portal-portal.css'
+import '@aifuxi/semi-theme-default/space.css'
 import { Space } from '@aifuxi/semi-ui-vue/space'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
 import HomeBento from '../components/HomeBento.vue'
 import ArticleSearch from '../components/islands/ArticleSearch.vue'
 import { site } from '../config/site'
 import Layout from '../layouts/Layout.astro'
-import { getPublicPosts, toSearchPost } from '../lib/posts'
+import { getPublicPosts, toPostSummary } from '../lib/posts'
 
-const posts = (await getPublicPosts()).map(toSearchPost)
+const posts = (await getPublicPosts()).map(toPostSummary)
 ---
 
 <Layout title={site.title} description={site.description}>
@@ -31,3 +34,15 @@ const posts = (await getPublicPosts()).map(toSearchPost)
     <HomeBento recentPosts={posts.slice(0, 3)} />
   </main>
 </Layout>
+
+<style>
+  .home-opening :global(h1) {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.2;
+  }
+
+  .home-opening :global(p) {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+</style>

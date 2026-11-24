@@ -1,0 +1,22 @@
+---
+import PageEmpty from '../components/PageEmpty.vue'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="找不到这个页面" description="该页面可能已移动，或网址有误。" noindex>
+  <main class="site-shell site-main content-page" id="main" tabindex="-1">
+    <PageEmpty
+      heading="h1"
+      title="找不到这个页面"
+      description="该页面可能已移动，或网址有误。"
+      notFound
+    >
+      <a class="site-action" href="/">
+        返回首页
+      </a>
+      <a class="site-action" href="/blog/">
+        浏览文章
+      </a>
+    </PageEmpty>
+  </main>
+</Layout>

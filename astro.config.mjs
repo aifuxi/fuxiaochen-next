@@ -28,6 +28,12 @@ export default defineConfig({
       },
     },
   ],
+  markdown: {
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: 'dark',
+    },
+  },
   server: ({ command }) => (command === 'dev' ? { port: 27797 } : {}),
   vite: {
     server: { strictPort: true },

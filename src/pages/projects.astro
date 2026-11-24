@@ -1,24 +1,35 @@
 ---
+import '@aifuxi/semi-theme-default/card.css'
 import { Card } from '@aifuxi/semi-ui-vue/card'
-import { Space } from '@aifuxi/semi-ui-vue/space'
-import { Paragraph, Text, Title } from '@aifuxi/semi-ui-vue/typography'
+import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
+import ProjectSource from '../components/ProjectSource.vue'
 import { project } from '../config/site'
 import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout title="开源项目" description="浏览 fuxiaochen 的开源项目。">
   <main class="site-shell site-main content-page" id="main" tabindex="-1">
-    <Space vertical align="start" spacing="loose">
+    <div class="page-stack">
       <Title heading={1}>开源项目</Title>
-      <Card headerLine>
+      <Card>
         <Title slot="title" heading={2}>
           {project.title}
         </Title>
-        <Space vertical align="start">
+        <div class="project-details">
           <Paragraph type="secondary">{project.summary}</Paragraph>
-          <Text link={{ href: project.source }}>查看源码</Text>
-        </Space>
+          <ProjectSource />
+        </div>
       </Card>
-    </Space>
+    </div>
   </main>
 </Layout>
+
+<style>
+  .project-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    align-items: center;
+  }
+</style>

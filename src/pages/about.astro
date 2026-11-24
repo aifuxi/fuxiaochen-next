@@ -1,17 +1,41 @@
 ---
-import { Space } from '@aifuxi/semi-ui-vue/space'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
-import { site } from '../config/site'
+import { project, site } from '../config/site'
 import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout title="关于作者" description={site.description}>
   <main class="site-shell site-main content-page" id="main" tabindex="-1">
-    <Space vertical align="start" spacing="loose">
+    <div class="page-stack">
       <Title heading={1}>关于作者</Title>
-      <Paragraph>
-        我是 {site.author}。{site.description}
-      </Paragraph>
-    </Space>
+      <div class="about-copy">
+        <Paragraph>
+          我是 <strong>{site.author}</strong>。{site.description}
+        </Paragraph>
+        <Paragraph>
+          你可以
+          <a class="site-link" href="/categories/">
+            按主题浏览文章
+          </a>
+          ，或到
+          <a class="site-link" href="/projects/">
+            开源项目
+          </a>
+          了解 {project.title}。
+        </Paragraph>
+      </div>
+    </div>
   </main>
 </Layout>
+
+<style>
+  .about-copy {
+    display: grid;
+    gap: 12px;
+  }
+
+  .about-copy :global(p) {
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+</style>
