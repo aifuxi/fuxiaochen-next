@@ -12,7 +12,7 @@ import '@aifuxi/semi-theme-default/modal.css'
 import '@aifuxi/semi-theme-default/shared/foundation-portal-portal.css'
 import '@aifuxi/semi-theme-default/tag.css'
 import '@aifuxi/semi-theme-default/typography.css'
-import modernThemeCss from '@aifuxi/semi-theme-modern/index.css?inline'
+import ModernTheme from '../../components/ModernTheme.astro'
 import VerificationModal from './VerificationModal.vue'
 import { Content as VerificationArticle } from './verification-article.mdx'
 
@@ -28,8 +28,6 @@ const dark = scheme === 'dark'
 const alternateTheme = modern ? 'default' : 'modern'
 const alternateScheme = dark ? 'light' : 'dark'
 const Illustration = dark ? IllustrationNoResultDark : IllustrationNoResult
-// 只在验证路由提高覆盖权重，避免构建拆分 CSS 后改变 Modern 圆角。
-const modernOverride = `:root { ${modernThemeCss} }`
 ---
 
 <!doctype html>
@@ -40,7 +38,7 @@ const modernOverride = `:root { ${modernThemeCss} }`
     <meta name="robots" content="noindex" />
     <meta name="color-scheme" content={scheme} />
     <title>Semi UI Vue 集成验证</title>
-    {modern && <style is:inline set:html={modernOverride} />}
+    {modern && <ModernTheme />}
   </head>
   <body theme-mode={dark ? 'dark' : undefined}>
     <main>

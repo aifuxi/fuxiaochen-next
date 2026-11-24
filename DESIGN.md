@@ -19,9 +19,9 @@
 | `--blog-header-height`、`--blog-sidebar-width`           | 页头 `64px`，宽屏目录栏 `240px`               |
 | `--blog-article-font-size`、`--blog-article-line-height` | `16px`，`1.85`                                |
 
-默认使用 Semi 默认主题。Modern 主题用于需要验证的圆角风格覆盖。首屏按用户选择或系统偏好呈现主题，验证浅色和深色下的正文、链接、代码块、图片和焦点状态。代码高亮采用 Shiki，并配置两种主题。
+公开页面使用 Semi 默认主题的基础样式，并统一加载 Modern 主题覆盖圆角 Token。首屏按用户选择或系统偏好呈现浅色或深色，验证两种模式下的正文、链接、代码块、图片和焦点状态。代码高亮采用 Shiki，并配置两种主题。
 
-首页使用 Semi 的 Layout、Grid、Space、Card、List、Typography、Button、Input 和 Modal。组件沿用默认主题样式，页面 CSS 负责站点容器、区块对齐和跳转链接的可见性。
+首页使用 Semi 的 Layout、Grid、Space、Card、List、Typography、Button、Input 和 Modal。组件通过 Semi Token 继承主题，页面 CSS 负责站点容器、区块对齐和跳转链接的可见性。
 
 ## 组件与资源
 

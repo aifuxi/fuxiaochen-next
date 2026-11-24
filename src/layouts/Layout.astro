@@ -10,6 +10,7 @@ import IconSun from '@aifuxi/semi-icons-vue/icons/IconSun'
 import { Button } from '@aifuxi/semi-ui-vue/button'
 import { Layout, LayoutFooter, LayoutHeader } from '@aifuxi/semi-ui-vue/layout'
 import { Text } from '@aifuxi/semi-ui-vue/typography'
+import ModernTheme from '../components/ModernTheme.astro'
 import { site } from '../config/site'
 import '../styles/site.css'
 
@@ -38,6 +39,7 @@ const navigation = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="color-scheme" content="light dark" />
+    <ModernTheme />
     <script is:inline>
       try {
         const theme = localStorage.getItem('blog-theme')

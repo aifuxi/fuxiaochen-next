@@ -1,0 +1,8 @@
+---
+import modernThemeCss from '@aifuxi/semi-theme-modern/index.css?inline'
+
+// 提高圆角覆盖的权重，避免页面样式拆分或组件激活时加载的默认 Token 覆盖它。
+const modernOverride = `:root { ${modernThemeCss} }`
+---
+
+<style is:inline set:html={modernOverride} />
