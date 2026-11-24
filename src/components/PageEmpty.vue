@@ -45,7 +45,8 @@ const darkIllustration = notFound ? IllustrationNotFoundDark : IllustrationNoCon
 
 .empty-illustration {
   display: block;
-  inline-size: clamp(112px, 25vw, 160px);
+  inline-size: 150px;
+  max-inline-size: 100%;
   aspect-ratio: 1;
 }
 
