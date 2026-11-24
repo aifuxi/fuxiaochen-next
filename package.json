@@ -12,6 +12,16 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@aifuxi/semi-icons-lab-vue": "2.2.6",
+    "@aifuxi/semi-icons-vue": "2.2.6",
+    "@aifuxi/semi-illustrations-vue": "2.2.6",
+    "@aifuxi/semi-theme-default": "2.2.6",
+    "@aifuxi/semi-theme-modern": "2.2.6",
+    "@aifuxi/semi-ui-vue": "2.2.6",
+    "@astrojs/rss": "^4.0.19",
     "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "pagefind": "^1.6.0"
   }
 }
