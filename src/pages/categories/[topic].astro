@@ -1,0 +1,32 @@
+---
+import { Card } from '@aifuxi/semi-ui-vue/card'
+import { Space } from '@aifuxi/semi-ui-vue/space'
+import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
+import PostList from '../../components/PostList.vue'
+import { topics } from '../../config/site'
+import Layout from '../../layouts/Layout.astro'
+import { getPublicPosts, toSearchPost } from '../../lib/posts'
+
+export function getStaticPaths() {
+  return topics.map((topic) => ({ params: { topic: topic.id }, props: { topic } }))
+}
+
+interface Props {
+  topic: (typeof topics)[number]
+}
+
+const { topic } = Astro.props
+const posts = (await getPublicPosts()).filter(({ data }) => data.topic === topic.id)
+---
+
+<Layout title={topic.title} description={topic.summary}>
+  <main class="site-shell site-main content-page" id="main" tabindex="-1">
+    <Space vertical align="start" spacing="loose">
+      <Title heading={1}>{topic.title}</Title>
+      <Paragraph type="secondary">{topic.summary}</Paragraph>
+      <Card>
+        <PostList posts={posts.map(toSearchPost)} empty="这个主题暂无已发布文章。" />
+      </Card>
+    </Space>
+  </main>
+</Layout>

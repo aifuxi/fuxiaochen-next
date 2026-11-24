@@ -30,7 +30,7 @@ web
 
 ## Evidence on Hand
 
-[产品需求](REQUIREMENTS.md)和[开发路线图](ROADMAP.md)记录了首版范围。当前可运行的首页位于 `src/pages/index.astro`，仍使用 Astro 初始模板。正式文章与项目案例以作者提供的内容为准。
+[产品需求](REQUIREMENTS.md)和[开发路线图](ROADMAP.md)记录了首版范围。首页位于 `src/pages/index.astro`，支持浏览近期文章、主题与开源项目。正式文章与项目案例以作者提供的内容为准。
 
 ## Product Principles
 

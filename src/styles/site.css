@@ -1,0 +1,63 @@
+:root {
+  color-scheme: light dark;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  color: var(--semi-color-text-0);
+  background: var(--semi-color-bg-0);
+}
+
+.site-shell {
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: 1280px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+.site-main {
+  padding-block: 24px;
+}
+
+.site-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-block-size: 64px;
+}
+
+.home-opening {
+  padding-block-end: 24px;
+}
+
+.bento-column {
+  display: flex;
+}
+
+.bento-card {
+  inline-size: 100%;
+}
+
+.content-page {
+  max-inline-size: 760px;
+}
+
+.theme-toggle[hidden] {
+  display: none;
+}
+
+.skip-link:not(:focus) {
+  position: absolute;
+  clip-path: inset(50%);
+}

@@ -1,11 +1,33 @@
 ---
-import Welcome from '../components/Welcome.astro'
+import '@aifuxi/semi-theme-default/input.css'
+import '@aifuxi/semi-theme-default/icon.css'
+import '@aifuxi/semi-theme-default/icon-button.css'
+import '@aifuxi/semi-theme-default/modal.css'
+import '@aifuxi/semi-theme-default/shared/foundation-portal-portal.css'
+import { Space } from '@aifuxi/semi-ui-vue/space'
+import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
+import HomeBento from '../components/HomeBento.vue'
+import ArticleSearch from '../components/islands/ArticleSearch.vue'
+import { site } from '../config/site'
 import Layout from '../layouts/Layout.astro'
+import { getPublicPosts, toSearchPost } from '../lib/posts'
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const posts = (await getPublicPosts()).map(toSearchPost)
 ---
 
-<Layout>
-  <Welcome />
+<Layout title={site.title} description={site.description}>
+  <main class="site-shell site-main" id="main" tabindex="-1">
+    <section class="home-opening" aria-labelledby="home-title">
+      <Space vertical align="start" spacing="loose">
+        <Space vertical align="start" spacing="tight">
+          <Title id="home-title" heading={1}>
+            {site.title}
+          </Title>
+          <Paragraph type="secondary">{site.description}</Paragraph>
+        </Space>
+        <ArticleSearch posts={posts} client:load />
+      </Space>
+    </section>
+    <HomeBento recentPosts={posts.slice(0, 3)} />
+  </main>
 </Layout>

@@ -1,0 +1,17 @@
+---
+import { Space } from '@aifuxi/semi-ui-vue/space'
+import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
+import { site } from '../config/site'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="关于作者" description={site.description}>
+  <main class="site-shell site-main content-page" id="main" tabindex="-1">
+    <Space vertical align="start" spacing="loose">
+      <Title heading={1}>关于作者</Title>
+      <Paragraph>
+        我是 {site.author}。{site.description}
+      </Paragraph>
+    </Space>
+  </main>
+</Layout>

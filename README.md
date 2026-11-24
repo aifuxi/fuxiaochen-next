@@ -29,6 +29,10 @@ WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启�
 
 首版计划通过 GitHub Actions 构建静态产物，由 Caddy 提供服务。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
 
+## 添加文章
+
+将 Markdown 或 MDX 放到 `src/content/posts/`。文章需要 `title`、`summary` 和 `publishedAt`（推荐 `YYYY-MM-DD`），可选 `topic`（`frontend`、`components` 或 `tooling`）和 `draft`。文件路径决定文章 URL，发布后应保持稳定。设置 `draft: true` 的文章会从公开页面和首页搜索中排除。
+
 ## 代码质量与提交
 
 使用 `mise run check` 运行全项目只读检查。也可以单独运行 `mise run lint` 或 `mise run format:check`。需要写回文件时，使用 `mise run lint:fix` 自动修复 ESLint 问题，使用 `mise run format` 统一格式。
