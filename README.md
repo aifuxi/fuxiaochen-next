@@ -33,6 +33,8 @@ WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启�
 
 使用 `mise run check` 运行全项目只读检查。也可以单独运行 `mise run lint` 或 `mise run format:check`。需要写回文件时，使用 `mise run lint:fix` 自动修复 ESLint 问题，使用 `mise run format` 统一格式。
 
+Prettier 负责基础排版。ESLint Stylistic 检查块注释前、多行声明与表达式前后，以及语句块后的留白。
+
 首次运行 `mise run install` 会安装 Husky 钩子。提交时，`pre-commit` 用 lint-staged 处理已暂存的文件，`commit-msg` 用 commitlint 检查标题。标题使用 Angular 风格，例如 `build(tooling): 接入代码质量检查`，scope 和正文按需填写。
 
 可用类型为 `build`、`ci`、`docs`、`feat`、`fix`、`perf`、`refactor`、`revert` 和 `test`。钩子会从 mise 的 shims 目录查找工具，这也适用于从 WebStorm 发起的 Git 提交。
