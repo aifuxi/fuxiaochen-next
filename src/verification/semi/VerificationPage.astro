@@ -1,0 +1,125 @@
+---
+import { IconTick } from '@aifuxi/semi-icons-vue'
+import { IconColorPlatteNew } from '@aifuxi/semi-icons-lab-vue'
+import { IllustrationNoResult, IllustrationNoResultDark } from '@aifuxi/semi-illustrations-vue'
+import { Tag } from '@aifuxi/semi-ui-vue/tag'
+// Astro 的服务端入口不会加载组件的浏览器样式入口。
+import '@aifuxi/semi-theme-default/base.css'
+import '@aifuxi/semi-theme-default/button.css'
+import '@aifuxi/semi-theme-default/icon.css'
+import '@aifuxi/semi-theme-default/icon-button.css'
+import '@aifuxi/semi-theme-default/modal.css'
+import '@aifuxi/semi-theme-default/shared/foundation-portal-portal.css'
+import '@aifuxi/semi-theme-default/tag.css'
+import '@aifuxi/semi-theme-default/typography.css'
+import modernThemeCss from '@aifuxi/semi-theme-modern/index.css?inline'
+import VerificationModal from './VerificationModal.vue'
+import { Content as VerificationArticle } from './verification-article.mdx'
+
+export function getStaticPaths() {
+  return ['default', 'modern'].flatMap((theme) =>
+    ['light', 'dark'].map((scheme) => ({ params: { theme, scheme } })),
+  )
+}
+
+const { theme, scheme } = Astro.params
+const modern = theme === 'modern'
+const dark = scheme === 'dark'
+const alternateTheme = modern ? 'default' : 'modern'
+const alternateScheme = dark ? 'light' : 'dark'
+const Illustration = dark ? IllustrationNoResultDark : IllustrationNoResult
+// 只在验证路由提高覆盖权重，避免构建拆分 CSS 后改变 Modern 圆角。
+const modernOverride = `:root { ${modernThemeCss} }`
+---
+
+<!doctype html>
+<html lang="zh-CN" style={{ colorScheme: scheme }}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+    <meta name="color-scheme" content={scheme} />
+    <title>Semi UI Vue 集成验证</title>
+    {modern && <style is:inline set:html={modernOverride} />}
+  </head>
+  <body theme-mode={dark ? 'dark' : undefined}>
+    <main>
+      <header>
+        <h1>Semi UI Vue 集成验证</h1>
+        <p>
+          {modern ? 'Modern 主题' : '默认主题'} · {dark ? '深色' : '浅色'}
+        </p>
+        <nav aria-label="验证页主题">
+          <a href={`/__verify/semi/${alternateTheme}/${scheme}/`}>
+            {modern ? '切换为默认主题' : '切换为 Modern 主题'}
+          </a>
+          <a href={`/__verify/semi/${theme}/${alternateScheme}/`}>
+            {dark ? '切换为浅色' : '切换为深色'}
+          </a>
+        </nav>
+      </header>
+
+      <article>
+        <VerificationArticle />
+      </article>
+
+      <section>
+        <h2>静态组件和资源</h2>
+        <ul>
+          <li>
+            <Tag>Semi Tag</Tag>
+          </li>
+          <li>
+            <IconTick aria-hidden="true" /> 基础图标
+          </li>
+          <li>
+            <IconColorPlatteNew aria-hidden="true" /> 多色图标
+          </li>
+        </ul>
+        <div aria-hidden="true">
+          <Illustration width={120} height={120} />
+        </div>
+      </section>
+
+      <section>
+        <h2>客户端交互</h2>
+        <VerificationModal client:load />
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    background: var(--semi-color-bg-0);
+    color: var(--semi-color-text-0);
+    font:
+      16px/1.65 system-ui,
+      sans-serif;
+  }
+
+  main {
+    max-inline-size: 48rem;
+    margin-inline: auto;
+    padding: clamp(1rem, 4vw, 3rem);
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  nav a {
+    color: var(--semi-color-link);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding: 0;
+    list-style: none;
+  }
+</style>
