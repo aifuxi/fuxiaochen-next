@@ -17,26 +17,34 @@ mise run dev
 
 开发服务默认在后台运行，地址为 `http://localhost:4321`。如果 `dev:status` 显示服务已启动，可以直接使用。
 
-| 命令 | 用途 |
-| --- | --- |
-| `mise run dev:status` | 查询当前项目的后台开发服务 |
-| `mise run dev:logs` | 查看后台服务日志，追加 `--follow` 持续查看 |
-| `mise run dev:stop` | 停止当前项目的后台开发服务 |
-| `mise run build` | 构建静态站点到 `dist/` |
-| `mise exec -- pnpm run preview` | 本地预览构建产物 |
+| 命令                            | 用途                                       |
+| ------------------------------- | ------------------------------------------ |
+| `mise run dev:status`           | 查询当前项目的后台开发服务                 |
+| `mise run dev:logs`             | 查看后台服务日志，追加 `--follow` 持续查看 |
+| `mise run dev:stop`             | 停止当前项目的后台开发服务                 |
+| `mise run build`                | 构建静态站点到 `dist/`                     |
+| `mise exec -- pnpm run preview` | 本地预览构建产物                           |
 
 WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启动前先检查 IDE 的运行会话和后台服务状态。
 
 首版计划通过 GitHub Actions 构建静态产物，由 Caddy 提供服务。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
 
+## 代码质量与提交
+
+使用 `mise run check` 运行全项目只读检查。也可以单独运行 `mise run lint` 或 `mise run format:check`。需要写回文件时，使用 `mise run lint:fix` 自动修复 ESLint 问题，使用 `mise run format` 统一格式。
+
+首次运行 `mise run install` 会安装 Husky 钩子。提交时，`pre-commit` 用 lint-staged 处理已暂存的文件，`commit-msg` 用 commitlint 检查标题。标题使用 Angular 风格，例如 `build(tooling): 接入代码质量检查`，scope 和正文按需填写。
+
+可用类型为 `build`、`ci`、`docs`、`feat`、`fix`、`perf`、`refactor`、`revert` 和 `test`。钩子会从 mise 的 shims 目录查找工具，这也适用于从 WebStorm 发起的 Git 提交。
+
 ## 项目文档
 
-| 文档 | 内容 |
-| --- | --- |
-| [AGENTS.md](AGENTS.md) | 开发约束、组件版本和验证要求 |
-| [REQUIREMENTS.md](REQUIREMENTS.md) | 产品范围、页面和内容发布规则 |
-| [DESIGN.md](DESIGN.md) | 布局、排版、主题和组件选择 |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | 模块职责、渲染和部署方式 |
-| [SEO.md](SEO.md) | 搜索可见性、性能目标和验收方法 |
-| [ROADMAP.md](ROADMAP.md) | 开发顺序和各阶段验收条件 |
-| [BOOTSTRAP.md](BOOTSTRAP.md) | 第一个实现任务及验收范围 |
+| 文档                               | 内容                           |
+| ---------------------------------- | ------------------------------ |
+| [AGENTS.md](AGENTS.md)             | 开发约束、组件版本和验证要求   |
+| [REQUIREMENTS.md](REQUIREMENTS.md) | 产品范围、页面和内容发布规则   |
+| [DESIGN.md](DESIGN.md)             | 布局、排版、主题和组件选择     |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | 模块职责、渲染和部署方式       |
+| [SEO.md](SEO.md)                   | 搜索可见性、性能目标和验收方法 |
+| [ROADMAP.md](ROADMAP.md)           | 开发顺序和各阶段验收条件       |
+| [BOOTSTRAP.md](BOOTSTRAP.md)       | 第一个实现任务及验收范围       |

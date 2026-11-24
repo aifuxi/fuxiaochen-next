@@ -9,7 +9,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "pnpm run lint && pnpm run format:check",
+    "prepare": "husky"
   },
   "dependencies": {
     "@aifuxi/semi-icons-lab-vue": "2.2.6",
@@ -22,6 +28,20 @@
     "astro": "^7.4.13"
   },
   "devDependencies": {
-    "pagefind": "^1.6.0"
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-angular": "21.2.4",
+    "@eslint/js": "10.0.1",
+    "eslint": "10.15.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-astro": "3.2.1",
+    "eslint-plugin-vue": "10.12.1",
+    "husky": "9.1.7",
+    "lint-staged": "17.6.2",
+    "pagefind": "^1.6.0",
+    "prettier": "3.10.1",
+    "prettier-plugin-astro": "1.1.2",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.73.0",
+    "vue-eslint-parser": "10.4.2"
   }
 }

@@ -3,8 +3,8 @@ node = "24.21.0"
 pnpm = "12.3.4"
 
 [tasks.install]
-description = "按锁文件安装项目依赖"
-run = "pnpm install --frozen-lockfile"
+description = "按锁文件安装依赖并启用 Git 钩子"
+run = "pnpm install --frozen-lockfile && pnpm run prepare"
 
 [tasks.dev]
 description = "在后台启动 Astro 开发服务"
@@ -25,3 +25,23 @@ run = "pnpm run dev stop"
 [tasks.build]
 description = "构建 Astro 站点"
 run = "pnpm run build"
+
+[tasks.lint]
+description = "检查项目代码"
+run = "pnpm run lint"
+
+[tasks."lint:fix"]
+description = "自动修复可修复的 ESLint 问题"
+run = "pnpm run lint:fix"
+
+[tasks.format]
+description = "格式化项目文件"
+run = "pnpm run format"
+
+[tasks."format:check"]
+description = "检查项目文件格式"
+run = "pnpm run format:check"
+
+[tasks.check]
+description = "检查代码和格式"
+run = "pnpm run check"
