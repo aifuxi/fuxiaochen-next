@@ -8,6 +8,7 @@ dist/
 node_modules/
 
 # agent skills restored from skills-lock.json
+/.agents/skills/design-taste-frontend/
 /.agents/skills/semi-ui-vue/
 /.agents/skills/impeccable/
 

@@ -10,7 +10,7 @@ const codeFiles = ['**/*.{js,mjs,cjs,ts,mts,cts,vue,astro}']
 
 export default defineConfig(
   globalIgnores([
-    '.agents/skills/{impeccable,semi-ui-vue}/',
+    '.agents/skills/{design-taste-frontend,impeccable,semi-ui-vue}/',
     '.astro/',
     '.codegraph/',
     '.codex/',
