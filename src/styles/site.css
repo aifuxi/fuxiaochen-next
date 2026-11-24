@@ -8,7 +8,7 @@
   scroll-padding-block-start: var(--blog-sticky-header-height);
 }
 
-@media (max-width: 26rem) {
+@media (max-width: 30rem) {
   :root {
     --blog-sticky-header-height: calc(var(--blog-header-height) + 48px);
   }
@@ -93,37 +93,73 @@ body {
 }
 
 .site-header-actions {
-  gap: 4px 8px;
+  gap: 4px clamp(12px, 2vw, 28px);
   padding-block: 4px;
 }
 
 .site-nav {
+  gap: clamp(4px, 1.4vw, 16px);
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .site-nav a {
+  position: relative;
   box-sizing: border-box;
   display: grid;
   place-items: center;
   min-inline-size: 44px;
   min-block-size: 44px;
   border-radius: var(--semi-border-radius-medium);
-  padding-inline: 6px;
+  padding-inline: 12px;
   color: var(--semi-color-text-1);
+  font-size: 0.9375rem;
   text-decoration: none;
 }
 
-.site-nav a:is(:hover, [aria-current]) {
+.site-nav a:hover {
   background: var(--semi-color-fill-0);
   color: var(--semi-color-text-0);
 }
 
 .site-nav a[aria-current] {
+  color: var(--semi-color-link);
   font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
+}
+
+.site-nav a[aria-current]::after {
+  position: absolute;
+  inset-block-end: 4px;
+  inline-size: 16px;
+  block-size: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  content: '';
+}
+
+@media (max-width: 30rem) {
+  .site-header-bar {
+    row-gap: 0;
+  }
+
+  .site-header-actions {
+    inline-size: 100%;
+  }
+
+  .site-header-actions nav {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  .site-nav {
+    justify-content: space-between;
+    gap: 4px;
+  }
+
+  .site-nav a {
+    padding-inline: 6px;
+  }
 }
 
 .site-link {
@@ -179,23 +215,6 @@ body {
 
 .page-heading :is(h1, p) {
   overflow-wrap: anywhere;
-}
-
-.theme-toggle {
-  min-block-size: 36px;
-}
-
-.theme-toggle .light-icon,
-body[theme-mode='dark'] .theme-toggle .dark-icon {
-  display: none;
-}
-
-body[theme-mode='dark'] .theme-toggle .light-icon {
-  display: inline-flex;
-}
-
-.theme-toggle[hidden] {
-  display: none;
 }
 
 .skip-link:not(:focus) {

@@ -5,12 +5,10 @@ import '@aifuxi/semi-theme-default/icon.css'
 import '@aifuxi/semi-theme-default/layout.css'
 import '@aifuxi/semi-theme-default/typography.css'
 import IconArrowUp from '@aifuxi/semi-icons-vue/icons/IconArrowUp'
-import IconMoon from '@aifuxi/semi-icons-vue/icons/IconMoon'
-import IconSun from '@aifuxi/semi-icons-vue/icons/IconSun'
-import { Button } from '@aifuxi/semi-ui-vue/button'
 import { Layout, LayoutFooter, LayoutHeader } from '@aifuxi/semi-ui-vue/layout'
 import { Text } from '@aifuxi/semi-ui-vue/typography'
 import BrandLogo from '../assets/brand-logo.svg'
+import ThemeMenu from '../components/islands/ThemeMenu.vue'
 import ModernTheme from '../components/ModernTheme.astro'
 import { site } from '../config/site'
 import '../styles/site.css'
@@ -74,7 +72,7 @@ const navigation = [
     </Text>
     <Layout class="site-layout">
       <LayoutHeader tagName="header" class="site-header">
-        <div class="site-shell site-bar">
+        <div class="site-shell site-bar site-header-bar">
           <a class="site-brand" href="/" aria-label={`${site.name}，返回首页`}>
             <BrandLogo aria-hidden="true" focusable="false" />
             <span>{site.name}</span>
@@ -100,13 +98,7 @@ const navigation = [
                 ))}
               </ul>
             </nav>
-            <Button id="theme-toggle" class="theme-toggle" theme="outline" type="tertiary" hidden>
-              <span class="icon-label">
-                <IconSun class="light-icon" aria-hidden="true" />
-                <IconMoon class="dark-icon" aria-hidden="true" />
-                <span id="theme-label">深色</span>
-              </span>
-            </Button>
+            <ThemeMenu client:load />
           </div>
         </div>
       </LayoutHeader>
@@ -122,9 +114,6 @@ const navigation = [
       </LayoutFooter>
     </Layout>
     <script>
-      const button = document.querySelector<HTMLButtonElement>('#theme-toggle')
-      const label = document.querySelector('#theme-label')
-      const system = window.matchMedia('(prefers-color-scheme: dark)')
       const root = document.documentElement
       const header = document.querySelector<HTMLElement>('.site-header')
 
@@ -132,52 +121,6 @@ const navigation = [
         new ResizeObserver(() => {
           root.style.setProperty('--blog-sticky-header-height', `${header.offsetHeight}px`)
         }).observe(header)
-      }
-
-      function updateTheme() {
-        const dark = root.dataset.theme === 'dark' || (!root.dataset.theme && system.matches)
-        if (dark) {
-          document.body.setAttribute('theme-mode', 'dark')
-        } else {
-          document.body.removeAttribute('theme-mode')
-        }
-
-        if (label) {
-          label.textContent = dark ? '浅色' : '深色'
-        }
-
-        button?.setAttribute('aria-label', dark ? '切换到浅色主题' : '切换到深色主题')
-      }
-
-      if (button) {
-        updateTheme()
-        button.hidden = false
-
-        button.addEventListener('click', () => {
-          const next = document.body.hasAttribute('theme-mode') ? 'light' : 'dark'
-          root.dataset.theme = next
-          updateTheme()
-
-          try {
-            localStorage.setItem('blog-theme', next)
-          } catch {
-            // 主题仍在当前页生效。
-          }
-        })
-
-        system.addEventListener('change', updateTheme)
-
-        window.addEventListener('storage', (event) => {
-          if (event.key === 'blog-theme' || event.key === null) {
-            if (event.newValue === 'light' || event.newValue === 'dark') {
-              root.dataset.theme = event.newValue
-            } else {
-              delete root.dataset.theme
-            }
-
-            updateTheme()
-          }
-        })
       }
     </script>
   </body>
