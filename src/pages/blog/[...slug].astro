@@ -1,6 +1,7 @@
 ---
 import IconArrowLeft from '@aifuxi/semi-icons-vue/icons/IconArrowLeft'
 import IconCalendar from '@aifuxi/semi-icons-vue/icons/IconCalendar'
+import { Button } from '@aifuxi/semi-ui-vue/button'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
 import { render, type CollectionEntry } from 'astro:content'
 import Layout from '../../layouts/Layout.astro'
@@ -67,9 +68,138 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
       <div class="article-body">
         <Content />
       </div>
+      <template id="article-copy-controls">
+        <span class="article-copy-status" role="status"></span>
+        <Button size="small" theme="borderless" type="tertiary" htmlType="button">
+          复制代码
+        </Button>
+      </template>
     </article>
   </main>
 </Layout>
+
+<script>
+  const template = document.querySelector<HTMLTemplateElement>('#article-copy-controls')
+
+  if (template) {
+    const blocks = Array.from(document.querySelectorAll('.article-body .article-code-block'))
+
+    for (const [index, block] of blocks.entries()) {
+      const toolbar = block.querySelector('.article-code-toolbar')
+      const code = block.querySelector<HTMLElement>('pre > code')
+      const controls = template.content.cloneNode(true) as DocumentFragment
+      const button = controls.querySelector('button')
+      const status = controls.querySelector('[role="status"]')
+      if (!toolbar || !code || !button || !status) {
+        continue
+      }
+
+      let reset: number | undefined
+      let previousMessage = ''
+
+      const copyCode = async () => {
+        let message = '已复制'
+        try {
+          await navigator.clipboard.writeText(code.textContent ?? '')
+        } catch {
+          message = '复制失败'
+        }
+
+        previousMessage = previousMessage === message ? `${message}\u00a0` : message
+        status.textContent = previousMessage
+        window.clearTimeout(reset)
+
+        reset = window.setTimeout(() => {
+          status.textContent = ''
+        }, 2000)
+      }
+
+      if ('CommandEvent' in window) {
+        code.id ||= `article-code-${index + 1}`
+        button.setAttribute('command', '--copy-code')
+        button.setAttribute('commandfor', code.id)
+        code.addEventListener('command', copyCode)
+      } else {
+        button.addEventListener('click', copyCode)
+      }
+
+      toolbar.append(controls)
+    }
+  }
+
+  const toc = document.querySelector<HTMLElement>('.article-toc')
+
+  if (toc) {
+    const list = toc.querySelector('ul')
+
+    const sections = Array.from(toc.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')).flatMap(
+      (link) => {
+        const heading = document.getElementById(decodeURIComponent(link.hash.slice(1)))
+        return heading ? [{ link, heading }] : []
+      },
+    )
+
+    const first = sections[0]
+    const last = sections.at(-1)
+    const root = document.documentElement
+    const header = document.querySelector<HTMLElement>('.site-header')
+    let active: HTMLAnchorElement | undefined
+    let frame: number | undefined
+
+    const updateCurrentSection = () => {
+      frame = undefined
+      if (!first || !last) {
+        return
+      }
+
+      const margin = parseFloat(getComputedStyle(first.heading).scrollMarginBlockStart)
+      const readingStart = (header?.getBoundingClientRect().bottom ?? 0) + margin + 1
+
+      const atBottom =
+        root.scrollHeight > innerHeight && root.scrollHeight - scrollY - innerHeight <= 1
+
+      const next = atBottom
+        ? last.link
+        : sections.findLast(({ heading }) => heading.getBoundingClientRect().top <= readingStart)
+            ?.link
+
+      if (active === next) {
+        return
+      }
+
+      active?.removeAttribute('aria-current')
+      active = next
+      active?.setAttribute('aria-current', 'location')
+
+      if (active && list && list.scrollHeight > list.clientHeight) {
+        const viewport = list.getBoundingClientRect()
+        const item = active.getBoundingClientRect()
+
+        list.scrollTop +=
+          Math.min(0, item.top - viewport.top) + Math.max(0, item.bottom - viewport.bottom)
+      }
+    }
+
+    function scheduleUpdate() {
+      frame ??= requestAnimationFrame(updateCurrentSection)
+    }
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('hashchange', scheduleUpdate)
+    window.addEventListener('pageshow', scheduleUpdate)
+    const article = toc.closest('article')
+    const resizeObserver = new ResizeObserver(scheduleUpdate)
+    if (article) {
+      resizeObserver.observe(article)
+    }
+
+    if (header) {
+      resizeObserver.observe(header)
+    }
+
+    scheduleUpdate()
+  }
+</script>
 
 <style>
   .article-layout {
@@ -141,9 +271,16 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
 
   .article-toc a {
     display: block;
-    padding-block: 4px;
+    padding: 4px 6px;
+    border-radius: var(--semi-border-radius-small);
     color: var(--semi-color-text-1);
     text-decoration: none;
+  }
+
+  .article-toc a[aria-current='location'] {
+    background: var(--semi-color-fill-0);
+    color: var(--semi-color-link);
+    font-weight: 600;
   }
 
   .article-toc a:is(:hover, :focus-visible) {
@@ -196,6 +333,34 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
     overflow-wrap: normal;
   }
 
+  .article-body :global(.article-code-block) {
+    margin-block: 1em;
+    border: 1px solid var(--semi-color-border);
+    border-radius: var(--semi-border-radius-medium);
+  }
+
+  .article-body :global(.article-code-toolbar) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px 4px 16px;
+    border-block-end: 1px solid var(--semi-color-border);
+    border-radius: var(--semi-border-radius-medium) var(--semi-border-radius-medium) 0 0;
+    background: var(--semi-color-bg-1);
+    color: var(--semi-color-text-1);
+    font-size: 0.875rem;
+  }
+
+  .article-copy-status {
+    margin-inline-start: auto;
+  }
+
+  .article-body :global(.article-code-block pre) {
+    margin: 0;
+    border: 0;
+    border-radius: 0 0 var(--semi-border-radius-medium) var(--semi-border-radius-medium);
+  }
+
   :global(body:not([theme-mode='dark'])) .article-body :global(.astro-code),
   :global(body:not([theme-mode='dark'])) .article-body :global(.astro-code span) {
     color: var(--shiki-light) !important;
@@ -210,9 +375,14 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
     .article-toc {
       grid-column: 2;
       grid-row: 1 / 3;
+      display: flex;
+      flex-direction: column;
       position: sticky;
-      inset-block-start: 24px;
-      max-block-size: calc(100dvh - 48px);
+      inset-block-start: calc(var(--blog-sticky-header-height) + 24px);
+      max-block-size: calc(100dvh - var(--blog-sticky-header-height) - 48px);
+    }
+
+    .article-toc ul {
       overflow-y: auto;
     }
   }

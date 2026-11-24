@@ -126,6 +126,13 @@ const navigation = [
       const label = document.querySelector('#theme-label')
       const system = window.matchMedia('(prefers-color-scheme: dark)')
       const root = document.documentElement
+      const header = document.querySelector<HTMLElement>('.site-header')
+
+      if (header) {
+        new ResizeObserver(() => {
+          root.style.setProperty('--blog-sticky-header-height', `${header.offsetHeight}px`)
+        }).observe(header)
+      }
 
       function updateTheme() {
         const dark = root.dataset.theme === 'dark' || (!root.dataset.theme && system.matches)
