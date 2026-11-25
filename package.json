@@ -37,6 +37,7 @@
     "@commitlint/cli": "21.2.4",
     "@commitlint/config-angular": "21.2.4",
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.1",
     "@stylistic/eslint-plugin": "5.10.0",
     "@types/node": "24.13.4",
     "eslint": "10.15.0",
@@ -50,6 +51,7 @@
     "prettier-plugin-astro": "1.1.2",
     "typescript": "6.0.3",
     "typescript-eslint": "8.73.0",
+    "vitest": "5.1.1",
     "vue-eslint-parser": "10.4.2"
   }
 }

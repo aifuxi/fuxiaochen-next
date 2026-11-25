@@ -31,7 +31,7 @@ WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启�
 
 ## 手动构建
 
-工作流进入仓库默认分支后，在 GitHub 的 **Actions → 构建静态站点 → Run workflow** 选择要构建的分支并运行。构建成功后，在该次运行页面的 **Artifacts** 下载 `fuxiaochen-next-dist` ZIP。
+工作流进入仓库默认分支后，在 GitHub 的 **Actions → 构建静态站点 → Run workflow** 选择要构建的分支并运行。代码检查、单元测试和生产构建的浏览器验收通过后，在该次运行页面的 **Artifacts** 下载 `fuxiaochen-next-dist` ZIP。
 
 将 ZIP 解压到服务器的站点根目录，确保 `index.html`、`_astro/`、`rss.xml`、站点地图和有公开文章时生成的 `pagefind/` 位于根目录下。构建默认使用正式域名 `https://fuxiaochen.com` 生成规范链接。其他环境可在运行 `mise run build` 时通过 `SITE_URL` 指定对应域名。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
 
@@ -44,6 +44,8 @@ WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启�
 ## 代码质量与提交
 
 使用 `mise run check` 运行全项目只读检查。也可以单独运行 `mise run lint` 或 `mise run format:check`。需要写回文件时，使用 `mise run lint:fix` 自动修复 ESLint 问题，使用 `mise run format` 统一格式。
+
+使用 `mise run test:unit` 检查公开内容规则和分页。首次运行浏览器测试前，用 `mise exec -- pnpm exec playwright install chromium` 安装 Chromium，再运行 `mise run test:e2e`。该任务生成生产产物，并在独立的本地预览中检查全文搜索、无 JavaScript 阅读、订阅和 SEO 链接。
 
 Prettier 负责基础排版。ESLint Stylistic 检查块注释前、多行声明与表达式前后，以及语句块后的留白。
 

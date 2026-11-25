@@ -45,3 +45,12 @@ run = "pnpm run format:check"
 [tasks.check]
 description = "检查代码和格式"
 run = "pnpm run check"
+
+[tasks."test:unit"]
+description = "运行 Vitest 单元测试"
+run = "pnpm exec vitest run"
+
+[tasks."test:e2e"]
+description = "构建站点并运行 Playwright 发布验收"
+depends = ["build"]
+run = "pnpm exec playwright test"

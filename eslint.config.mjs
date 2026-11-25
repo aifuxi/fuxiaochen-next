@@ -16,6 +16,8 @@ export default defineConfig(
     '.codex/',
     'coverage/',
     'dist/',
+    'test-results/',
+    'playwright-report/',
   ]),
   {
     files: codeFiles,
