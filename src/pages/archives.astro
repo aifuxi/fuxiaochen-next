@@ -1,0 +1,33 @@
+---
+import { Title } from '@aifuxi/semi-ui-vue/typography'
+import PageEmpty from '../components/PageEmpty.vue'
+import PostList from '../components/PostList.vue'
+import Layout from '../layouts/Layout.astro'
+import { getPublicPosts, toPostSummary } from '../lib/posts'
+
+const postsByYear = Map.groupBy(await getPublicPosts(), ({ data }) =>
+  data.publishedAt.getUTCFullYear(),
+)
+---
+
+<Layout title="归档" description="按年份浏览已发布的文章。">
+  <main class="site-shell site-main content-page" id="main" tabindex="-1">
+    <div class="page-stack">
+      <Title heading={1}>归档</Title>
+      {postsByYear.size ? (
+        Array.from(postsByYear, ([year, posts]) => (
+          <section>
+            <Title heading={2}>{year} 年</Title>
+            <PostList posts={posts.map(toPostSummary)} />
+          </section>
+        ))
+      ) : (
+        <PageEmpty title="暂无已发布文章">
+          <a class="site-action" href="/">
+            返回首页
+          </a>
+        </PageEmpty>
+      )}
+    </div>
+  </main>
+</Layout>

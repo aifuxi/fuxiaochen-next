@@ -13,9 +13,12 @@ const posts = await getPublicPosts()
     <div class="page-stack">
       <header class="page-heading">
         <Title heading={1}>文章</Title>
-        <div>
+        <div class="post-browse-links">
           <a class="site-link" href="/tags/">
             浏览标签
+          </a>
+          <a class="site-link" href="/archives/">
+            浏览归档
           </a>
         </div>
       </header>
@@ -34,3 +37,11 @@ const posts = await getPublicPosts()
     </div>
   </main>
 </Layout>
+
+<style>
+  .post-browse-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+</style>
