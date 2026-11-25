@@ -6,21 +6,27 @@ GitHub Actions 在默认分支手动触发 **发布静态站点**。构建通过
 
 服务器需要 Caddy、OpenSSH、Bash、GNU tar、coreutils 和 `flock`。配置专用的 SSH 发布账号，使用公钥登录并只授予该站点发布目录的写权限。Caddy 进程需要能遍历发布路径并读取静态文件。
 
-在一个新的发布根目录下创建 `releases/initial`，把现有静态站点复制进去作为回滚版本。首次上线时可用一份已验收的静态产物初始化。以 `/srv/fuxiaochen` 为例，初始化后的目录如下。
+发布工作流使用 `/data/fc-apps/fuxiaochen-next` 作为站点工作目录。在其中创建 `releases/initial`，把现有静态站点复制进去作为回滚版本。首次上线时可用一份已验收的静态产物初始化。
 
 ```text
-/srv/fuxiaochen/
+/data/fc-apps/fuxiaochen-next/
 ├── current -> releases/initial
 └── releases/
     └── initial/
         └── index.html
 ```
 
-`current` 使用相对链接，指向 `releases/` 下的版本。将 `fuxiaochen.com` 对应的 Caddy 站点根路径设为 `/srv/fuxiaochen/current`，用以下规则提供静态文件和自定义 404。
+`current` 使用相对链接，指向 `releases/` 下的版本。
+
+## 配置 Caddy 和 HTTPS
+
+将 `fuxiaochen.com` 和 `www.fuxiaochen.com` 的 DNS 指向这台服务器，并确保 Caddy 能从公网接收 TCP 80 和 443 的连接。Caddy 会为两个域名自动签发并续期证书，并将主域名的 HTTP 请求升级到 HTTPS。[Caddy 自动 HTTPS](https://caddyserver.com/docs/automatic-https)
+
+将 Caddy 的静态文件根目录指向 `current`。两个协议下的 `www` 请求均永久跳转到 HTTPS 主域名，并保留路径和查询参数。
 
 ```caddyfile
 fuxiaochen.com {
-    root * /srv/fuxiaochen/current
+    root * /data/fc-apps/fuxiaochen-next/current
     header /_release.txt Cache-Control "no-store"
     file_server
 
@@ -32,9 +38,13 @@ fuxiaochen.com {
         }
     }
 }
+
+http://www.fuxiaochen.com, https://www.fuxiaochen.com {
+    redir https://fuxiaochen.com{uri} permanent
+}
 ```
 
-校验并重新加载 Caddy 配置后，先确认旧站点仍可访问。之后发布只切换符号链接。
+校验并重新加载 Caddy 配置后，确认 HTTPS 主站可访问，并分别检查 HTTP 和 HTTPS 的 `www` 跳转。之后发布只切换符号链接。
 
 ## 配置 GitHub
 
@@ -42,7 +52,6 @@ fuxiaochen.com {
 
 | 类型     | 名称                     | 取值                                          |
 | -------- | ------------------------ | --------------------------------------------- |
-| Variable | `DEPLOY_ROOT`            | 服务器发布根目录，例如 `/srv/fuxiaochen`      |
 | Variable | `DEPLOY_SSH_HOST`        | runner 可访问的 SSH 主机名或 IP               |
 | Variable | `DEPLOY_SSH_PORT`        | SSH 端口，省略时使用 `22`                     |
 | Variable | `DEPLOY_SSH_USER`        | 专用发布账号                                  |
@@ -62,7 +71,7 @@ fuxiaochen.com {
 ```bash
 (
   set -eu
-  cd /srv/fuxiaochen
+  cd /data/fc-apps/fuxiaochen-next
   current=$(readlink current)
   read -r previous _ < ".deploy/${current##*/}.previous"
   test -s "$previous/index.html"
