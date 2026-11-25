@@ -21,4 +21,4 @@
 
 - `mise run check` 和 `mise run build` 通过。生产预览中验证了标题和中文正文搜索、空查询和无结果、键盘打开及访问结果、按 Esc 关闭后焦点返回，以及窄屏明暗主题。
 - 隔离样例覆盖了 Markdown、嵌套路径的 MDX、分页和仅含草稿的构建。Pagefind 索引只包含公开文章，草稿不生成路由或进入 RSS、站点地图。没有公开文章时生成空 RSS。
-- 解析了生产产物的 RSS 和站点地图 XML，核对了 canonical、Open Graph、`BlogPosting`、封面及 `robots.txt`，并用 `SITE_URL` 替换构建域名验证链接一致性。正式域名和部署后的访问留到发布验收阶段。
+- 解析了生产产物的 RSS 和站点地图 XML，核对了 canonical、Open Graph、`BlogPosting`、封面及 `robots.txt`，并用 `SITE_URL` 替换构建域名验证链接一致性。正式域名已确认为 `https://fuxiaochen.com`，线上访问纳入第 4 阶段验收。

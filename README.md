@@ -33,7 +33,7 @@ WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启�
 
 工作流进入仓库默认分支后，在 GitHub 的 **Actions → 构建静态站点 → Run workflow** 选择要构建的分支并运行。构建成功后，在该次运行页面的 **Artifacts** 下载 `fuxiaochen-next-dist` ZIP。
 
-将 ZIP 解压到服务器的站点根目录，确保 `index.html`、`_astro/`、`rss.xml`、站点地图和有公开文章时生成的 `pagefind/` 位于根目录下。构建默认使用候选域名 `https://fuxiaochen.com` 生成规范链接。发布前确认域名，必要时用 `SITE_URL=https://实际域名 mise run build` 覆盖。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
+将 ZIP 解压到服务器的站点根目录，确保 `index.html`、`_astro/`、`rss.xml`、站点地图和有公开文章时生成的 `pagefind/` 位于根目录下。构建默认使用正式域名 `https://fuxiaochen.com` 生成规范链接。其他环境可在运行 `mise run build` 时通过 `SITE_URL` 指定对应域名。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
 
 ## 添加文章
 
