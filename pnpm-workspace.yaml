@@ -1,7 +1,7 @@
 minimumReleaseAgeExclude:
-  - '@aifuxi/semi-icons-lab-vue@2.2.7'
-  - '@aifuxi/semi-icons-vue@2.2.7'
-  - '@aifuxi/semi-illustrations-vue@2.2.7'
-  - '@aifuxi/semi-theme-default@2.2.7'
-  - '@aifuxi/semi-theme-modern@2.2.7'
-  - '@aifuxi/semi-ui-vue@2.2.7'
+  - '@aifuxi/semi-icons-lab-vue@2.2.8'
+  - '@aifuxi/semi-icons-vue@2.2.8'
+  - '@aifuxi/semi-illustrations-vue@2.2.8'
+  - '@aifuxi/semi-theme-default@2.2.8'
+  - '@aifuxi/semi-theme-modern@2.2.8'
+  - '@aifuxi/semi-ui-vue@2.2.8'

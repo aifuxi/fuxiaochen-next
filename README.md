@@ -2,7 +2,7 @@
 
 基于 Astro、TypeScript、MDX 和 Semi UI Vue 的个人博客与个人品牌网站。Astro 负责页面和内容渲染，Vue 提供局部交互，公开内容优先在构建时生成静态 HTML。
 
-博客页面、Vue 与 MDX 集成、文章全文搜索和 RSS 订阅已实现。发布进度见 [路线图](ROADMAP.md)。六个 Semi UI Vue 生态包统一使用 `2.2.7`。
+博客页面、Vue 与 MDX 集成、文章全文搜索和 RSS 订阅已实现。发布进度见 [路线图](ROADMAP.md)。六个 Semi UI Vue 生态包统一使用 `2.2.8`。
 
 ## 本地开发
 
