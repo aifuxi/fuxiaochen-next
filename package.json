@@ -19,12 +19,12 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@aifuxi/semi-icons-lab-vue": "2.2.6",
-    "@aifuxi/semi-icons-vue": "2.2.6",
-    "@aifuxi/semi-illustrations-vue": "2.2.6",
-    "@aifuxi/semi-theme-default": "2.2.6",
-    "@aifuxi/semi-theme-modern": "2.2.6",
-    "@aifuxi/semi-ui-vue": "2.2.6",
+    "@aifuxi/semi-icons-lab-vue": "2.2.7",
+    "@aifuxi/semi-icons-vue": "2.2.7",
+    "@aifuxi/semi-illustrations-vue": "2.2.7",
+    "@aifuxi/semi-theme-default": "2.2.7",
+    "@aifuxi/semi-theme-modern": "2.2.7",
+    "@aifuxi/semi-ui-vue": "2.2.7",
     "@astrojs/mdx": "8.1.6",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/vue": "7.1.6",
