@@ -8,9 +8,9 @@
 
 ## Semi UI Vue 版本
 
-- `@aifuxi/semi-ui-vue`、`@aifuxi/semi-icons-vue`、`@aifuxi/semi-icons-lab-vue`、`@aifuxi/semi-illustrations-vue`、`@aifuxi/semi-theme-default`、`@aifuxi/semi-theme-modern` 当前统一锁定 `2.2.8`。使用精确版本，禁止使用 `^` 和 `~`。
+- `@aifuxi/semi-ui-vue`、`@aifuxi/semi-icons-vue`、`@aifuxi/semi-icons-lab-vue`、`@aifuxi/semi-illustrations-vue`、`@aifuxi/semi-theme-default`、`@aifuxi/semi-theme-modern` 当前统一锁定 `2.2.9`。使用精确版本，禁止使用 `^` 和 `~`。
 - 升级需经用户明确授权。安装前确认六个包的相同版本均已发布，统一更新并提交锁文件，重新验收 SSG、SSR、Hydration 和样式。
-- 查组件时从已安装版本的 `package.json`、`exports` 和公开类型入手，核对实际版本的 props、事件和插槽。参考同版本源码、示例及 [Semi UI Vue Skill](https://github.com/aifuxi/semi-ui-vue/tree/%40aifuxi/semi-ui-vue%402.2.8/skills/semi-ui-vue)，禁止猜测组件 API。
+- 查组件时从已安装版本的 `package.json`、`exports` 和公开类型入手，核对实际版本的 props、事件和插槽。参考同版本源码、示例及 [Semi UI Vue Skill](https://github.com/aifuxi/semi-ui-vue/tree/%40aifuxi/semi-ui-vue%402.2.9/skills/semi-ui-vue)，禁止猜测组件 API。
 
 ## 开发与验证
 

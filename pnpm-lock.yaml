@@ -9,23 +9,23 @@ importers:
   .:
     dependencies:
       '@aifuxi/semi-icons-lab-vue':
-        specifier: 2.2.8
-        version: 2.2.8(vue@3.5.46(typescript@6.0.3))
+        specifier: 2.2.9
+        version: 2.2.9(vue@3.5.46(typescript@6.0.3))
       '@aifuxi/semi-icons-vue':
-        specifier: 2.2.8
-        version: 2.2.8(vue@3.5.46(typescript@6.0.3))
+        specifier: 2.2.9
+        version: 2.2.9(vue@3.5.46(typescript@6.0.3))
       '@aifuxi/semi-illustrations-vue':
-        specifier: 2.2.8
-        version: 2.2.8(vue@3.5.46(typescript@6.0.3))
+        specifier: 2.2.9
+        version: 2.2.9(vue@3.5.46(typescript@6.0.3))
       '@aifuxi/semi-theme-default':
-        specifier: 2.2.8
-        version: 2.2.8
+        specifier: 2.2.9
+        version: 2.2.9
       '@aifuxi/semi-theme-modern':
-        specifier: 2.2.8
-        version: 2.2.8
+        specifier: 2.2.9
+        version: 2.2.9
       '@aifuxi/semi-ui-vue':
-        specifier: 2.2.8
-        version: 2.2.8(@floating-ui/dom@1.8.0)(vue@3.5.46(typescript@6.0.3))
+        specifier: 2.2.9
+        version: 2.2.9(@floating-ui/dom@1.8.0)(vue@3.5.46(typescript@6.0.3))
       '@astrojs/mdx':
         specifier: 8.1.6
         version: 8.1.6(@astrojs/markdown-satteri@0.4.10)(astro@7.4.13(@types/node@24.13.4)(jiti@2.7.0)(yaml@2.9.1))
@@ -108,29 +108,29 @@ importers:
 
 packages:
 
-  '@aifuxi/semi-icons-lab-vue@2.2.8':
-    resolution: {integrity: sha512-ShWr19T8JuIEIcVz8EYrvJrbNQoOkSghmRpx3pxpx7SlO3dH8Xe7ITfWvSfxzyUXJjbW2HuZHddzvdxPsWD20w==}
+  '@aifuxi/semi-icons-lab-vue@2.2.9':
+    resolution: {integrity: sha512-EcGNm4TvpG32ZUm2qW7RI5/g5u1ByIbD0FGZLTmEnX10z6+UJz7WHhj8wRk76icDeYtYpNUY30Aog1R4KCsF3Q==}
     peerDependencies:
       vue: '>=3.5.0'
 
-  '@aifuxi/semi-icons-vue@2.2.8':
-    resolution: {integrity: sha512-64ABGN0I4Q3MuuMcHix9Kl8okRxmucNLdGJNeNirPaa7gWTRTqmHAge0Wu/EN+Dfrz0l0JVkEiRiVsJaNhRaDw==}
+  '@aifuxi/semi-icons-vue@2.2.9':
+    resolution: {integrity: sha512-fjS604d4rHPy2XaN9lxWI1uYsmWI12d6NRflJrmPe+dS4IqplOKXh8xbNAJ9ehC7z5pS14ypTvV70N6mUE5QZQ==}
     peerDependencies:
       vue: '>=3.5.0'
 
-  '@aifuxi/semi-illustrations-vue@2.2.8':
-    resolution: {integrity: sha512-yGtyAONVKZJZo9PChJV2o/ZownQJJ7ASJ95h2huAQrAm8m+L0tSVRIQsPUPa9n4K3i2U6l8eFEprDa9Y+2Vexg==}
+  '@aifuxi/semi-illustrations-vue@2.2.9':
+    resolution: {integrity: sha512-B+pX/EQ6tK3dpwIBNwOWrp4T1l2uOAurc9OtMYwbrztNwgHNiwRgm1iP/S/+ruSI+3oKsm0YKaUjRKPJSZT4mg==}
     peerDependencies:
       vue: '>=3.5.0'
 
-  '@aifuxi/semi-theme-default@2.2.8':
-    resolution: {integrity: sha512-tDIvnwjGRsR4U9zg/gDZXi+ebtC6ba181t7YLMAT90CLxQDzpJLI+mlSIhPHGY4jceisOOe21KPZRA47J2fnzA==}
+  '@aifuxi/semi-theme-default@2.2.9':
+    resolution: {integrity: sha512-zQub4N3ex6BLvIeRBOQUMT8molB5/hA2AzY36FDyYSl/1iEUuAU2yFuBtxmKOzywPGIT6r/gC+Y1hG13v6S4iA==}
 
-  '@aifuxi/semi-theme-modern@2.2.8':
-    resolution: {integrity: sha512-NIF3VdnC8RuT8ZB7FjxBxOeI4w5VtcY5zXOQGgygmpkuKSWqBYZSr3wQZDfk+1AmEDkYwWZMDuizBYhyaXaYvQ==}
+  '@aifuxi/semi-theme-modern@2.2.9':
+    resolution: {integrity: sha512-4rUxrDiG5wcUeBY9aWpBOMNs3VILkJaYPQfZ4ZnwIqwXv4P82CwwhbU00lkv0IThQ5kXi9Rka4hlO+D9mZaSQA==}
 
-  '@aifuxi/semi-ui-vue@2.2.8':
-    resolution: {integrity: sha512-M9dm1OmZleZE6+gpbiwLSuDvFxH1sFJm/E97L2uVrOuUUK2KdzW9j2UFFYhW3B6EaxYX4gXP5WJw8qddGZehFQ==}
+  '@aifuxi/semi-ui-vue@2.2.9':
+    resolution: {integrity: sha512-X+OEdA1J9NjUsI90zV7Q7iUQCZrJnro2lRvVXPO9HZOrJ/MT+hJRugiZVuwThXoy9z5qlrVmKNFUWGxFjMFarA==}
     peerDependencies:
       vue: '>=3.5.0'
 
@@ -3444,28 +3444,28 @@ packages:
 
 snapshots:
 
-  '@aifuxi/semi-icons-lab-vue@2.2.8(vue@3.5.46(typescript@6.0.3))':
+  '@aifuxi/semi-icons-lab-vue@2.2.9(vue@3.5.46(typescript@6.0.3))':
     dependencies:
       vue: 3.5.46(typescript@6.0.3)
 
-  '@aifuxi/semi-icons-vue@2.2.8(vue@3.5.46(typescript@6.0.3))':
+  '@aifuxi/semi-icons-vue@2.2.9(vue@3.5.46(typescript@6.0.3))':
     dependencies:
       vue: 3.5.46(typescript@6.0.3)
 
-  '@aifuxi/semi-illustrations-vue@2.2.8(vue@3.5.46(typescript@6.0.3))':
+  '@aifuxi/semi-illustrations-vue@2.2.9(vue@3.5.46(typescript@6.0.3))':
     dependencies:
       vue: 3.5.46(typescript@6.0.3)
 
-  '@aifuxi/semi-theme-default@2.2.8': {}
+  '@aifuxi/semi-theme-default@2.2.9': {}
 
-  '@aifuxi/semi-theme-modern@2.2.8': {}
+  '@aifuxi/semi-theme-modern@2.2.9': {}
 
-  '@aifuxi/semi-ui-vue@2.2.8(@floating-ui/dom@1.8.0)(vue@3.5.46(typescript@6.0.3))':
+  '@aifuxi/semi-ui-vue@2.2.9(@floating-ui/dom@1.8.0)(vue@3.5.46(typescript@6.0.3))':
     dependencies:
-      '@aifuxi/semi-icons-lab-vue': 2.2.8(vue@3.5.46(typescript@6.0.3))
-      '@aifuxi/semi-icons-vue': 2.2.8(vue@3.5.46(typescript@6.0.3))
-      '@aifuxi/semi-illustrations-vue': 2.2.8(vue@3.5.46(typescript@6.0.3))
-      '@aifuxi/semi-theme-default': 2.2.8
+      '@aifuxi/semi-icons-lab-vue': 2.2.9(vue@3.5.46(typescript@6.0.3))
+      '@aifuxi/semi-icons-vue': 2.2.9(vue@3.5.46(typescript@6.0.3))
+      '@aifuxi/semi-illustrations-vue': 2.2.9(vue@3.5.46(typescript@6.0.3))
+      '@aifuxi/semi-theme-default': 2.2.9
       '@mdx-js/mdx': 3.0.1
       '@tiptap/core': 3.35.0(@tiptap/pm@3.35.0)
       '@tiptap/extension-document': 3.35.0(@tiptap/core@3.35.0(@tiptap/pm@3.35.0))
