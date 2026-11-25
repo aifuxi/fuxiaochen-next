@@ -1,0 +1,76 @@
+---
+import { Title } from '@aifuxi/semi-ui-vue/typography'
+import Layout from '../layouts/Layout.astro'
+import { blogPagePath, type getBlogPages } from '../lib/blog-pagination'
+import PageEmpty from './PageEmpty.vue'
+import PostList from './PostList.vue'
+
+type Props = Awaited<ReturnType<typeof getBlogPages>>[number]
+
+const { pageNumber, totalPages, posts } = Astro.props
+const title = pageNumber === 1 ? '文章' : `文章 · 第 ${pageNumber} 页`
+---
+
+<Layout title={title} description="浏览已发布的前端开发笔记。">
+  <main class="site-shell site-main content-page" id="main" tabindex="-1">
+    <div class="page-stack">
+      <header class="page-heading">
+        <Title heading={1}>文章</Title>
+        <div class="post-browse-links">
+          <a class="site-link" href="/tags/">
+            浏览标签
+          </a>
+          <a class="site-link" href="/archives/">
+            浏览归档
+          </a>
+        </div>
+      </header>
+      {posts.length ? (
+        <PostList posts={posts} />
+      ) : (
+        <PageEmpty title="暂无已发布文章">
+          <a class="site-action" href="/categories/">
+            浏览主题
+          </a>
+          <a class="site-action" href="/projects/">
+            查看开源项目
+          </a>
+        </PageEmpty>
+      )}
+      {totalPages > 1 && (
+        <nav class="post-pagination" aria-label="文章分页">
+          {pageNumber > 1 && (
+            <a class="site-action" href={blogPagePath(pageNumber - 1)} rel="prev">
+              上一页
+            </a>
+          )}
+          <span>
+            第 {pageNumber} 页，共 {totalPages} 页
+          </span>
+          {pageNumber < totalPages && (
+            <a class="site-action" href={blogPagePath(pageNumber + 1)} rel="next">
+              下一页
+            </a>
+          )}
+        </nav>
+      )}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .post-browse-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+
+  .post-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 16px;
+    color: var(--semi-color-text-1);
+  }
+</style>

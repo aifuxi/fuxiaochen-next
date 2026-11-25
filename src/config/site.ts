@@ -5,6 +5,7 @@ export const site = {
   author: '付小晨',
   homeHeading: '前端开发笔记',
   description: '记录前端工程、组件库和开发工具的实践。',
+  feedbackUrl: 'https://github.com/aifuxi/fuxiaochen-next/issues',
   filings: [
     { label: '赣 ICP 备 2024026230 号', href: 'https://beian.miit.gov.cn' },
     {

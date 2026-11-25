@@ -1,47 +1,8 @@
 ---
-import { Title } from '@aifuxi/semi-ui-vue/typography'
-import PageEmpty from '../../components/PageEmpty.vue'
-import PostList from '../../components/PostList.vue'
-import Layout from '../../layouts/Layout.astro'
-import { getPublicPosts, toPostSummary } from '../../lib/posts'
+import BlogIndex from '../../components/BlogIndex.astro'
+import { getBlogPages } from '../../lib/blog-pagination'
 
-const posts = await getPublicPosts()
+const [page] = await getBlogPages()
 ---
 
-<Layout title="文章" description="浏览已发布的前端开发笔记。">
-  <main class="site-shell site-main content-page" id="main" tabindex="-1">
-    <div class="page-stack">
-      <header class="page-heading">
-        <Title heading={1}>文章</Title>
-        <div class="post-browse-links">
-          <a class="site-link" href="/tags/">
-            浏览标签
-          </a>
-          <a class="site-link" href="/archives/">
-            浏览归档
-          </a>
-        </div>
-      </header>
-      {posts.length ? (
-        <PostList posts={posts.map(toPostSummary)} />
-      ) : (
-        <PageEmpty title="暂无已发布文章">
-          <a class="site-action" href="/categories/">
-            浏览主题
-          </a>
-          <a class="site-action" href="/projects/">
-            查看开源项目
-          </a>
-        </PageEmpty>
-      )}
-    </div>
-  </main>
-</Layout>
-
-<style>
-  .post-browse-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-  }
-</style>
+<BlogIndex {...page} />

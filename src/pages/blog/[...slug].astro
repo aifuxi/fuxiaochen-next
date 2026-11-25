@@ -3,6 +3,7 @@ import IconArrowLeft from '@aifuxi/semi-icons-vue/icons/IconArrowLeft'
 import IconCalendar from '@aifuxi/semi-icons-vue/icons/IconCalendar'
 import { Button } from '@aifuxi/semi-ui-vue/button'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
+import { Image } from 'astro:assets'
 import { render, type CollectionEntry } from 'astro:content'
 import TagLinks from '../../components/TagLinks.astro'
 import Layout from '../../layouts/Layout.astro'
@@ -19,7 +20,8 @@ interface Props {
 const { post } = Astro.props
 const { Content, headings } = await render(post)
 const { title, summary, publishedAt, topic } = toPostSummary(post)
-const { tags = [] } = post.data
+const { cover, tags = [], updatedAt } = post.data
+const updatedDate = updatedAt?.toISOString().slice(0, 10)
 const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
 ---
 
@@ -39,6 +41,11 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
             <IconCalendar aria-hidden="true" />
             {publishedAt}
           </time>
+          {updatedDate && (
+            <span>
+              更新于 <time datetime={updatedDate}>{updatedDate}</time>
+            </span>
+          )}
           {topic && (
             <a class="site-link" href={'/categories/' + post.data.topic + '/'}>
               {topic}
@@ -47,6 +54,9 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
         </div>
         <Paragraph type="secondary">{summary}</Paragraph>
         {tags.length > 0 && <TagLinks tags={tags} />}
+        {cover && (
+          <Image class="article-cover" src={cover.image} alt={cover.alt} layout="constrained" />
+        )}
       </header>
       {sections.length > 0 && (
         <nav class="article-toc" aria-labelledby="article-toc-title">
@@ -221,6 +231,13 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
     gap: 4px 16px;
     color: var(--semi-color-text-1);
     font-variant-numeric: tabular-nums;
+  }
+
+  .article-cover {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--semi-border-radius-medium);
   }
 
   .article-toc {

@@ -10,7 +10,7 @@ import Layout from '../layouts/Layout.astro'
       <Title heading={1}>关于作者</Title>
       <div class="about-copy">
         <Paragraph>
-          我是 <strong>{site.author}</strong>。{site.description}
+          我是 <strong>{site.author}</strong>，一名前端开发工程师。{site.description}
         </Paragraph>
         <Paragraph>
           你可以
@@ -22,6 +22,13 @@ import Layout from '../layouts/Layout.astro'
             开源项目
           </a>
           了解 {project.title}。
+        </Paragraph>
+        <Paragraph>
+          你可以在
+          <a class="site-link" href={site.feedbackUrl}>
+            GitHub 提交网站反馈
+          </a>
+          。
         </Paragraph>
       </div>
     </div>
