@@ -72,10 +72,10 @@ export default defineConfig({
                 return
               }
 
-              // 复用 Semi 的深色 Token，让系统深色偏好在禁用脚本时也能生效。
+              // 让禁用脚本时的系统暗色生效，同时保留 Modern 主题的圆角覆盖。
               const nodes = root.nodes.flatMap((node) =>
                 node.type === 'rule' && node.selectors.includes('body[theme-mode=dark]')
-                  ? [node.clone({ selector: ':root:not([data-theme]) body' })]
+                  ? [node.clone({ selector: ':where(:root:not([data-theme])) body' })]
                   : [],
               )
 

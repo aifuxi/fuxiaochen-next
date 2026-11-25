@@ -78,6 +78,17 @@ test.describe('禁用 JavaScript', () => {
   })
 })
 
+test.describe('跟随系统暗色', () => {
+  test.use({ colorScheme: 'dark', javaScriptEnabled: false })
+
+  test('禁用 JavaScript 时保留暗色背景和 Modern 圆角', async ({ page }) => {
+    await page.goto('/release-check-missing-page/')
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(22, 22, 26)')
+    await expect(page.locator('.page-empty')).toHaveCSS('border-radius', '24px')
+    await expect(page.locator('.empty-dark')).toBeVisible()
+  })
+})
+
 test('窄屏切换暗色后，文章页面保留主题', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 740 })
   await page.goto('/')
