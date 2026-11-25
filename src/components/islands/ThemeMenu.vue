@@ -11,7 +11,7 @@ import { Dropdown, DropdownMenu, type DropdownExposed } from '@aifuxi/semi-ui-vu
 import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue'
 
 const options = {
-  system: { label: '跟随系统', icon: IconDesktop },
+  system: { label: '系统', icon: IconDesktop },
   light: { label: '亮色', icon: IconSun },
   dark: { label: '暗色', icon: IconMoon },
 }
@@ -128,7 +128,7 @@ onBeforeUnmount(() => {
       type="tertiary"
       theme="light"
       html-type="button"
-      :aria-label="'主题外观，当前' + currentOption.label"
+      :aria-label="'主题外观，当前' + (theme === 'system' ? '跟随系统' : currentOption.label)"
       :aria-controls="menuOpen ? 'site-theme-popup' : undefined"
       @keydown.enter.prevent
       @keydown.space.prevent
