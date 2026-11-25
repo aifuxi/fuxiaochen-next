@@ -20,6 +20,15 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
+  --blog-light-illustration-display: none;
+  --blog-dark-illustration-display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --blog-light-illustration-display: none;
+    --blog-dark-illustration-display: block;
+  }
 }
 
 body {

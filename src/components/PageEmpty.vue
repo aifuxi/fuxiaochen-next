@@ -56,13 +56,12 @@ const darkIllustration = notFound ? IllustrationNotFoundDark : IllustrationNoCon
   block-size: 100%;
 }
 
-.empty-illustration :deep(.empty-dark),
-body[theme-mode='dark'] .empty-illustration :deep(.empty-light) {
-  display: none;
+.empty-illustration :deep(.empty-light) {
+  display: var(--blog-light-illustration-display, block);
 }
 
-body[theme-mode='dark'] .empty-illustration :deep(.empty-dark) {
-  display: block;
+.empty-illustration :deep(.empty-dark) {
+  display: var(--blog-dark-illustration-display, none);
 }
 
 .empty-heading {

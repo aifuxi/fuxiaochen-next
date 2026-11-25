@@ -5,6 +5,7 @@ import { Button } from '@aifuxi/semi-ui-vue/button'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
 import { Image } from 'astro:assets'
 import { render, type CollectionEntry } from 'astro:content'
+import ArticleTocLinks from '../../components/ArticleTocLinks.astro'
 import TagLinks from '../../components/TagLinks.astro'
 import Layout from '../../layouts/Layout.astro'
 import { getPublicPosts, toPostSummary } from '../../lib/posts'
@@ -59,15 +60,15 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
         )}
       </header>
       {sections.length > 0 && (
-        <nav class="article-toc" aria-labelledby="article-toc-title">
-          <h2 id="article-toc-title">文章目录</h2>
-          <ul>
-            {sections.map(({ depth, slug, text }) => (
-              <li class:list={{ 'toc-subsection': depth === 3 }}>
-                <a href={'#' + encodeURIComponent(slug)}>{text}</a>
-              </li>
-            ))}
-          </ul>
+        <nav class="article-toc" aria-label="文章目录">
+          <details class="toc-compact">
+            <summary>文章目录</summary>
+            <ArticleTocLinks sections={sections} />
+          </details>
+          <div class="toc-desktop">
+            <h2>文章目录</h2>
+            <ArticleTocLinks sections={sections} />
+          </div>
         </nav>
       )}
       <div class="article-body">
@@ -135,12 +136,19 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
   const toc = document.querySelector<HTMLElement>('.article-toc')
 
   if (toc) {
-    const list = toc.querySelector('ul')
+    const list = toc.querySelector('.toc-desktop ul')
 
-    const sections = Array.from(toc.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')).flatMap(
+    const compactLinks = new Map(
+      Array.from(toc.querySelectorAll<HTMLAnchorElement>('.toc-compact a'), (link) => [
+        link.hash,
+        link,
+      ]),
+    )
+
+    const sections = Array.from(list?.querySelectorAll<HTMLAnchorElement>('a') ?? []).flatMap(
       (link) => {
         const heading = document.getElementById(decodeURIComponent(link.hash.slice(1)))
-        return heading ? [{ link, heading }] : []
+        return heading ? [{ link, heading, compactLink: compactLinks.get(link.hash) }] : []
       },
     )
 
@@ -148,7 +156,7 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
     const last = sections.at(-1)
     const root = document.documentElement
     const header = document.querySelector<HTMLElement>('.site-header')
-    let active: HTMLAnchorElement | undefined
+    let active: (typeof sections)[number] | undefined
     let frame: number | undefined
 
     const updateCurrentSection = () => {
@@ -164,21 +172,22 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
         root.scrollHeight > innerHeight && root.scrollHeight - scrollY - innerHeight <= 1
 
       const next = atBottom
-        ? last.link
+        ? last
         : sections.findLast(({ heading }) => heading.getBoundingClientRect().top <= readingStart)
-            ?.link
 
       if (active === next) {
         return
       }
 
-      active?.removeAttribute('aria-current')
+      active?.link.removeAttribute('aria-current')
+      active?.compactLink?.removeAttribute('aria-current')
       active = next
-      active?.setAttribute('aria-current', 'location')
+      active?.link.setAttribute('aria-current', 'location')
+      active?.compactLink?.setAttribute('aria-current', 'location')
 
-      if (active && list && list.scrollHeight > list.clientHeight) {
+      if (active && list && list.clientHeight > 0 && list.scrollHeight > list.clientHeight) {
         const viewport = list.getBoundingClientRect()
-        const item = active.getBoundingClientRect()
+        const item = active.link.getBoundingClientRect()
 
         list.scrollTop +=
           Math.min(0, item.top - viewport.top) + Math.max(0, item.bottom - viewport.bottom)
@@ -253,17 +262,31 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
     font-size: 0.875rem;
   }
 
-  .article-toc ul {
+  .toc-desktop {
+    display: none;
+  }
+
+  .toc-compact summary {
+    min-block-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .toc-compact[open] summary {
+    margin-block-end: 8px;
+  }
+
+  .article-toc :global(ul) {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .toc-subsection {
+  .article-toc :global(.toc-subsection) {
     padding-inline-start: 12px;
   }
 
-  .article-toc a {
+  .article-toc :global(a) {
     display: block;
     padding: 4px 6px;
     border-radius: var(--semi-border-radius-small);
@@ -271,13 +294,13 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
     text-decoration: none;
   }
 
-  .article-toc a[aria-current='location'] {
+  .article-toc :global(a[aria-current='location']) {
     background: var(--semi-color-fill-0);
     color: var(--semi-color-link);
     font-weight: 600;
   }
 
-  .article-toc a:is(:hover, :focus-visible) {
+  .article-toc :global(a:is(:hover, :focus-visible)) {
     text-decoration: underline;
     text-underline-offset: 0.18em;
   }
@@ -355,10 +378,16 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
     border-radius: 0 0 var(--semi-border-radius-medium) var(--semi-border-radius-medium);
   }
 
-  :global(body:not([theme-mode='dark'])) .article-body :global(.astro-code),
-  :global(body:not([theme-mode='dark'])) .article-body :global(.astro-code span) {
+  :global(:root[data-theme='light']) .article-body :global(.astro-code, .astro-code span) {
     color: var(--shiki-light) !important;
     background-color: var(--shiki-light-bg) !important;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :global(:root:not([data-theme])) .article-body :global(.astro-code, .astro-code span) {
+      color: var(--shiki-light) !important;
+      background-color: var(--shiki-light-bg) !important;
+    }
   }
 
   @media (min-width: 62rem) {
@@ -376,7 +405,17 @@ const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
       max-block-size: calc(100dvh - var(--blog-sticky-header-height) - 48px);
     }
 
-    .article-toc ul {
+    .toc-compact {
+      display: none;
+    }
+
+    .toc-desktop {
+      display: flex;
+      flex-direction: column;
+      min-block-size: 0;
+    }
+
+    .toc-desktop :global(ul) {
       overflow-y: auto;
     }
   }

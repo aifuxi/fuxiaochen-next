@@ -1,0 +1,17 @@
+---
+import type { MarkdownHeading } from 'astro'
+
+interface Props {
+  sections: MarkdownHeading[]
+}
+
+const { sections } = Astro.props
+---
+
+<ul>
+  {sections.map(({ depth, slug, text }) => (
+    <li class:list={{ 'toc-subsection': depth === 3 }}>
+      <a href={'#' + encodeURIComponent(slug)}>{text}</a>
+    </li>
+  ))}
+</ul>
