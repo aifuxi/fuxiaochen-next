@@ -3,6 +3,9 @@ import policeFilingIcon from '../assets/police-filing.png'
 export const site = {
   name: '付小晨',
   author: '付小晨',
+  language: 'zh-CN',
+  rssPath: '/rss.xml',
+  sitemapPath: '/sitemap-index.xml',
   homeHeading: '前端开发笔记',
   description: '记录前端工程、组件库和开发工具的实践。',
   feedbackUrl: 'https://github.com/aifuxi/fuxiaochen-next/issues',

@@ -2,10 +2,6 @@
 import '@aifuxi/semi-theme-default/card.css'
 import '@aifuxi/semi-theme-default/grid.css'
 import '@aifuxi/semi-theme-default/icon-button.css'
-import '@aifuxi/semi-theme-default/input.css'
-import '@aifuxi/semi-theme-default/list.css'
-import '@aifuxi/semi-theme-default/modal.css'
-import '@aifuxi/semi-theme-default/shared/foundation-portal-portal.css'
 import '@aifuxi/semi-theme-default/space.css'
 import { Space } from '@aifuxi/semi-ui-vue/space'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
@@ -28,7 +24,7 @@ const posts = (await getPublicPosts()).map(toPostSummary)
           </Title>
           <Paragraph type="secondary">{site.description}</Paragraph>
         </Space>
-        <ArticleSearch posts={posts} client:load />
+        <ArticleSearch has-posts={posts.length > 0} client:load />
       </Space>
     </section>
     <HomeBento recentPosts={posts.slice(0, 3)} />

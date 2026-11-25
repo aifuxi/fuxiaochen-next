@@ -2,7 +2,7 @@
 
 基于 Astro、TypeScript、MDX 和 Semi UI Vue 的个人博客与个人品牌网站。Astro 负责页面和内容渲染，Vue 提供局部交互，公开内容优先在构建时生成静态 HTML。
 
-当前仓库已有 Astro 基础工程和依赖锁文件，六个 Semi UI Vue 生态包统一使用 `2.2.7`。博客页面、内容集合、Vue 与 MDX 集成、搜索索引和部署流水线按 [路线图](ROADMAP.md) 实施。
+博客页面、Vue 与 MDX 集成、文章全文搜索和 RSS 订阅已实现。发布进度见 [路线图](ROADMAP.md)。六个 Semi UI Vue 生态包统一使用 `2.2.7`。
 
 ## 本地开发
 
@@ -22,20 +22,22 @@ mise run dev
 | `mise run dev:status`           | 查询当前项目的后台开发服务                 |
 | `mise run dev:logs`             | 查看后台服务日志，追加 `--follow` 持续查看 |
 | `mise run dev:stop`             | 停止当前项目的后台开发服务                 |
-| `mise run build`                | 构建静态站点到 `dist/`                     |
+| `mise run build`                | 构建静态站点和 Pagefind 索引到 `dist/`     |
 | `mise exec -- pnpm run preview` | 本地预览构建产物                           |
 
 WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启动前先检查 IDE 的运行会话和后台服务状态。
+
+在生产构建的本地预览中验证首页全文搜索。Pagefind 从构建生成的文章 HTML 创建索引。
 
 ## 手动构建
 
 工作流进入仓库默认分支后，在 GitHub 的 **Actions → 构建静态站点 → Run workflow** 选择要构建的分支并运行。构建成功后，在该次运行页面的 **Artifacts** 下载 `fuxiaochen-next-dist` ZIP。
 
-将 ZIP 解压到服务器的站点根目录，确保 `index.html` 和 `_astro/` 位于根目录下。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
+将 ZIP 解压到服务器的站点根目录，确保 `index.html`、`_astro/`、`rss.xml`、站点地图和有公开文章时生成的 `pagefind/` 位于根目录下。构建默认使用候选域名 `https://fuxiaochen.com` 生成规范链接。发布前确认域名，必要时用 `SITE_URL=https://实际域名 mise run build` 覆盖。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
 
 ## 添加文章
 
-将 Markdown 或 MDX 放到 `src/content/posts/`。文章需要 `title`、`summary` 和 `publishedAt`，可选 `updatedAt`、`topic`（`frontend`、`components` 或 `tooling`）、`tags`（例如 `[Debian 12, 服务器初始化]`）、`cover` 和 `draft`。日期使用 `YYYY-MM-DD` 或 ISO 8601 日期时间。更新文章时填写 `updatedAt` 并保留原发布日期。封面可写成 `cover: { image: './cover.png', alt: '封面内容描述' }`，图片路径相对于文章文件。公开文章的标签会出现在 `/tags/`，标签按原名称区分大小写。设置 `draft: true` 的文章会从公开页面和首页搜索中排除。
+将 Markdown 或 MDX 放到 `src/content/posts/`。文章需要 `title`、`summary` 和 `publishedAt`，可选 `updatedAt`、`topic`（`frontend`、`components` 或 `tooling`）、`tags`（例如 `[Debian 12, 服务器初始化]`）、`cover` 和 `draft`。日期使用 `YYYY-MM-DD` 或 ISO 8601 日期时间。更新文章时填写 `updatedAt` 并保留原发布日期。封面可写成 `cover: { image: './cover.png', alt: '封面内容描述' }`，图片路径相对于文章文件。公开文章的标签会出现在 `/tags/`，标签按原名称区分大小写。设置 `draft: true` 的文章会从公开页面、全文搜索、RSS 和站点地图中排除。
 
 文件路径决定文章 URL，发布后应保持稳定。`/blog/` 为文章列表首页，每页 10 篇，后续页使用 `/blog/page/2/` 等路径。构建会拒绝发布使用 `page/数字` 路径的文章。
 

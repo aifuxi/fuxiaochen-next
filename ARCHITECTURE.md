@@ -30,6 +30,6 @@ Astro 负责路由、布局、内容渲染和元数据。Markdown 与 MDX 通过
 
 ## 构建与部署
 
-- 静态发布先构建 Astro 页面，再用 Pagefind 对产物中的公开正文生成索引。HTML、静态资源和搜索索引作为同一构建产物发布。 [Pagefind 文档](https://pagefind.app/docs/)
-- GitHub Actions 提供手动构建，按 mise 和 pnpm 锁文件安装工具及依赖，并将 `dist/` 打包为可下载产物。部署时将解压后的内容交给 Caddy 提供静态服务。正式域名暂以方案中的 `fuxiaochen.com` 为候选，部署前确认并配置 Astro 的 `site`。
+- Astro 构建完成后，Pagefind 读取标记了 `data-pagefind-body` 的公开文章 HTML。首页搜索在访客首次输入关键词时加载搜索索引。HTML、静态资源和搜索索引作为同一构建产物发布。 [Pagefind 文档](https://pagefind.app/docs/)
+- GitHub Actions 提供手动构建，按 mise 和 pnpm 锁文件安装工具及依赖，并将 `dist/` 打包为可下载产物。部署时将解压后的内容交给 Caddy 提供静态服务。Astro 的 `site` 默认使用候选域名 `https://fuxiaochen.com`，生成 canonical、RSS 与站点地图。部署前确认域名，可通过 `SITE_URL` 覆盖。
 - 如后续启用 SSR，由 Caddy 将对应请求转发到 Node.js 服务；现有公开文章继续预渲染。SSR 专项验收见 [SEO 规范](SEO.md#渲染兼容性)。

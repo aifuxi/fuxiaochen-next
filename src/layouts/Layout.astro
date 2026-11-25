@@ -17,12 +17,34 @@ interface Props {
   title?: string
   description: string
   noindex?: boolean
+  article?: {
+    publishedAt: string
+    updatedAt?: string
+    image?: { src: string; alt: string }
+  }
 }
 
-const { title, description, noindex } = Astro.props
+const { title, description, noindex, article } = Astro.props
 const pageTitle = title ? `${title} · ${site.name}` : site.name
-const canonical = !noindex && Astro.site && new URL(Astro.url.pathname, Astro.site)
 const currentPath = Astro.url.pathname.replace(/\/?$/, '/')
+const canonical = !noindex && Astro.site && new URL(currentPath, Astro.site)
+const image = article?.image ?? { src: '/apple-icon.png', alt: site.name }
+const imageUrl = canonical ? new URL(image.src, canonical).href : undefined
+
+const structuredData = article &&
+  canonical && {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    description,
+    url: canonical.href,
+    mainEntityOfPage: canonical.href,
+    datePublished: article.publishedAt,
+    dateModified: article.updatedAt,
+    author: { '@type': 'Person', name: site.author, url: new URL('/about/', canonical).href },
+    inLanguage: site.language,
+    image: article.image && imageUrl,
+  }
 
 const navigation = [
   { href: '/blog/', label: '文章', relatedPaths: ['/tags/', '/archives/'] },
@@ -33,7 +55,7 @@ const navigation = [
 ---
 
 <!doctype html>
-<html lang="zh-CN" id="top">
+<html lang={site.language} id="top">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -53,11 +75,41 @@ const navigation = [
       }
     </script>
     <meta name="description" content={description} />
-    <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
-    {canonical && <link rel="canonical" href={canonical.href} />}
+    {canonical && (
+      <>
+        <link rel="canonical" href={canonical.href} />
+        <meta property="og:site_name" content={site.name} />
+        <meta property="og:type" content={article ? 'article' : 'website'} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical.href} />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:alt" content={image.alt} />
+        {article && <meta property="article:published_time" content={article.publishedAt} />}
+        {article?.updatedAt && (
+          <meta property="article:modified_time" content={article.updatedAt} />
+        )}
+      </>
+    )}
+    {Astro.site && (
+      <>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={site.name}
+          href={new URL(site.rssPath, Astro.site)}
+        />
+        <link rel="sitemap" href={new URL(site.sitemapPath, Astro.site)} />
+      </>
+    )}
+    {structuredData && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(structuredData).replaceAll('<', '\\u003c')}
+      />
+    )}
     <title>{pageTitle}</title>
   </head>
   <body>
@@ -67,10 +119,10 @@ const navigation = [
         document.body.setAttribute('theme-mode', 'dark')
       }
     </script>
-    <Text class="skip-link" link={{ href: '#main' }}>
-      跳到正文
-    </Text>
     <Layout class="site-layout">
+      <Text class="skip-link" link={{ href: '#main' }}>
+        跳到正文
+      </Text>
       <LayoutHeader tagName="header" class="site-header">
         <div class="site-shell site-bar site-header-bar">
           <a class="site-brand" href="/" aria-label={`${site.name}，返回首页`}>
@@ -106,7 +158,12 @@ const navigation = [
       <slot />
       <LayoutFooter tagName="footer" class="site-footer">
         <div class="site-shell site-bar footer-bar">
-          <Text type="secondary">{site.author}</Text>
+          <div class="footer-links">
+            <Text type="secondary">{site.author}</Text>
+            <a href={site.rssPath} class="site-link">
+              RSS 订阅
+            </a>
+          </div>
           <ul class="footer-filings" role="list" aria-label="网站备案">
             {site.filings.map(({ label, href, icon }) => (
               <li>
@@ -155,6 +212,12 @@ const navigation = [
     text-align: center;
   }
 
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+
   .footer-top {
     justify-self: end;
   }
@@ -167,6 +230,10 @@ const navigation = [
 
     .footer-top {
       justify-self: center;
+    }
+
+    .footer-links {
+      justify-content: center;
     }
   }
 </style>

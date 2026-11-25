@@ -3,7 +3,7 @@ import IconArrowLeft from '@aifuxi/semi-icons-vue/icons/IconArrowLeft'
 import IconCalendar from '@aifuxi/semi-icons-vue/icons/IconCalendar'
 import { Button } from '@aifuxi/semi-ui-vue/button'
 import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
-import { Image } from 'astro:assets'
+import { getImage, Image } from 'astro:assets'
 import { render, type CollectionEntry } from 'astro:content'
 import ArticleTocLinks from '../../components/ArticleTocLinks.astro'
 import TagLinks from '../../components/TagLinks.astro'
@@ -24,20 +24,25 @@ const { title, summary, publishedAt, topic } = toPostSummary(post)
 const { cover, tags = [], updatedAt } = post.data
 const updatedDate = updatedAt?.toISOString().slice(0, 10)
 const sections = headings.filter(({ depth }) => depth === 2 || depth === 3)
+const image = cover && { src: (await getImage({ src: cover.image })).src, alt: cover.alt }
 ---
 
-<Layout title={title} description={summary}>
+<Layout
+  title={title}
+  description={summary}
+  article={{ publishedAt, updatedAt: updatedDate, image }}
+>
   <main class="site-shell site-main" id="main" tabindex="-1">
-    <article class:list={['article-layout', { 'with-toc': sections.length }]}>
+    <article class:list={['article-layout', { 'with-toc': sections.length }]} data-pagefind-body>
       <header class="article-heading page-heading">
         <div>
-          <a class="site-link icon-label" href="/blog/">
+          <a class="site-link icon-label" href="/blog/" data-pagefind-ignore>
             <IconArrowLeft aria-hidden="true" />
             返回文章列表
           </a>
         </div>
         <Title heading={1}>{title}</Title>
-        <div class="article-meta">
+        <div class="article-meta" data-pagefind-ignore>
           <time class="icon-label" datetime={publishedAt}>
             <IconCalendar aria-hidden="true" />
             {publishedAt}

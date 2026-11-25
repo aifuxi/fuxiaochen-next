@@ -1,11 +1,15 @@
 // @ts-check
+import { env } from 'node:process'
 import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
 import vue from '@astrojs/vue'
 import { defineConfig } from 'astro/config'
+import pagefind from './integrations/pagefind.mjs'
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), mdx()],
+  site: env.SITE_URL ?? 'https://fuxiaochen.com',
+  integrations: [vue(), mdx(), sitemap(), pagefind()],
   markdown: {
     shikiConfig: {
       themes: { light: 'github-light', dark: 'github-dark' },
