@@ -6,7 +6,7 @@ GitHub Actions 在默认分支手动触发 **发布静态站点**。构建通过
 
 服务器需要 Caddy、OpenSSH、Bash、GNU tar、coreutils 和 `flock`。配置专用的 SSH 发布账号，使用公钥登录并只授予该站点发布目录的写权限。Caddy 进程需要能遍历发布路径并读取静态文件。
 
-发布工作流使用 `/data/fc-apps/fuxiaochen-next` 作为站点工作目录。在其中创建 `releases/initial`，把现有静态站点复制进去作为回滚版本。首次上线时可用一份已验收的静态产物初始化。
+发布工作流使用 `/data/fc-apps/fuxiaochen-next` 作为站点工作目录。初始化后的目录结构如下。
 
 ```text
 /data/fc-apps/fuxiaochen-next/
@@ -16,7 +16,18 @@ GitHub Actions 在默认分支手动触发 **发布静态站点**。构建通过
         └── index.html
 ```
 
-`current` 使用相对链接，指向 `releases/` 下的版本。
+在服务器上执行以下命令，将 `deploy_user` 改为实际的发布账号，与 GitHub 的 `DEPLOY_SSH_USER` 一致。
+
+```bash
+deploy_root=/data/fc-apps/fuxiaochen-next
+deploy_user=site-deploy
+
+sudo install -d -m 0755 -o "$deploy_user" -- \
+  "$deploy_root" "$deploy_root/releases" "$deploy_root/releases/initial" &&
+  sudo -u "$deploy_user" ln -sT -- releases/initial "$deploy_root/current"
+```
+
+把现有静态站点文件复制到 `releases/initial/` 作为回滚版本。首次上线可用已验收的 `dist/` 内容初始化。复制完成后，确认 `index.html` 位于 `releases/initial/` 根部。
 
 ## 配置 Caddy 和 HTTPS
 
