@@ -2,6 +2,7 @@ name: 构建静态站点
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -39,3 +40,4 @@ jobs:
           name: fuxiaochen-next-dist
           path: dist/
           if-no-files-found: error
+          overwrite: true

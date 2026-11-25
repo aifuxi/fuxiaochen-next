@@ -29,11 +29,15 @@ WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启�
 
 在生产构建的本地预览中验证首页全文搜索。Pagefind 从构建生成的文章 HTML 创建索引。
 
-## 手动构建
+## 发布
+
+完成 [首次配置](DEPLOYMENT.md) 后，在 GitHub Actions 手动运行 **发布静态站点**。工作流构建并测试静态产物，经 SSH 上传到 Caddy 服务器，切换版本后运行线上验收。
+
+## 单独构建
 
 工作流进入仓库默认分支后，在 GitHub 的 **Actions → 构建静态站点 → Run workflow** 选择要构建的分支并运行。代码检查、单元测试和生产构建的浏览器验收通过后，在该次运行页面的 **Artifacts** 下载 `fuxiaochen-next-dist` ZIP。
 
-将 ZIP 解压到服务器的站点根目录，确保 `index.html`、`_astro/`、`rss.xml`、站点地图和有公开文章时生成的 `pagefind/` 位于根目录下。构建默认使用正式域名 `https://fuxiaochen.com` 生成规范链接。其他环境可在运行 `mise run build` 时通过 `SITE_URL` 指定对应域名。部署约定见 [架构](ARCHITECTURE.md#构建与部署)。
+产物包括 `index.html`、`_astro/`、`rss.xml`、站点地图和有公开文章时生成的 `pagefind/`。构建默认使用正式域名 `https://fuxiaochen.com` 生成规范链接。其他环境可在运行 `mise run build` 时通过 `SITE_URL` 指定对应域名。
 
 ## 添加文章
 

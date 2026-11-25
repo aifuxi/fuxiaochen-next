@@ -53,4 +53,8 @@ run = "pnpm exec vitest run"
 [tasks."test:e2e"]
 description = "构建站点并运行 Playwright 发布验收"
 depends = ["build"]
-run = "pnpm exec playwright test"
+run = "PLAYWRIGHT_BASE_URL= pnpm exec playwright test"
+
+[tasks."test:published"]
+description = "运行已部署站点的 Playwright 验收"
+run = 'test -n "${PLAYWRIGHT_BASE_URL:-}" && pnpm exec playwright test'

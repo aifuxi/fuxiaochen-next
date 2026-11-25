@@ -36,4 +36,5 @@
 | `/blog/debian-12-server-setup/` | 100 | 100  | 1.05 s | 0   |
 
 - Chromium 159 在 390 × 740 视口、4 倍 CPU 节流下，对主题切换、搜索、目录与代码复制采样。首页、列表和长文的实验室最长交互耗时分别为 40、32 和 64 ms。启用和禁用 JavaScript 时长文正文 HTML 一致，比较时剔除了代码复制工具栏及其关联 ID。
+- [SSH 一键发布](DEPLOYMENT.md)已在临时 Debian 环境用 OpenSSH、Caddy 和 Playwright 验证，覆盖正常切换、拒绝重复编号、拒绝不完整产物和线上检查失败后的回滚。
 - 待部署到 Caddy 后，在 `https://fuxiaochen.com` 验证线上路由、静态资源、订阅和全文搜索。实地 Core Web Vitals 待上线后采集。
