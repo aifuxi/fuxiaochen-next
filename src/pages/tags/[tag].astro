@@ -1,0 +1,38 @@
+---
+import IconArrowLeft from '@aifuxi/semi-icons-vue/icons/IconArrowLeft'
+import { Title } from '@aifuxi/semi-ui-vue/typography'
+import type { InferGetStaticPropsType } from 'astro'
+import PostList from '../../components/PostList.vue'
+import Layout from '../../layouts/Layout.astro'
+import { getPublicTagGroups, tagSlug } from '../../lib/tags'
+
+export async function getStaticPaths() {
+  const groups = await getPublicTagGroups()
+
+  return Array.from(groups, ([tag, posts]) => ({
+    params: { tag: tagSlug(tag) },
+    props: { tag, posts },
+  }))
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
+
+const { tag, posts } = Astro.props
+---
+
+<Layout title={`${tag} · 标签`} description={`浏览「${tag}」标签下的已发布文章。`}>
+  <main class="site-shell site-main content-page" id="main" tabindex="-1">
+    <div class="page-stack">
+      <header class="page-heading">
+        <div>
+          <a class="site-link icon-label" href="/tags/">
+            <IconArrowLeft aria-hidden="true" />
+            全部标签
+          </a>
+        </div>
+        <Title heading={1}>{tag}</Title>
+      </header>
+      <PostList posts={posts} />
+    </div>
+  </main>
+</Layout>

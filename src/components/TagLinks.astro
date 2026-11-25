@@ -1,0 +1,46 @@
+---
+import { tagSlug } from '../lib/tags'
+
+interface Props {
+  tags: Iterable<string>
+}
+
+const tags = [...new Set(Astro.props.tags)]
+---
+
+<ul class="tag-links" role="list" aria-label="文章标签">
+  {tags.map((tag) => (
+    <li>
+      <a class="site-link" href={`/tags/${encodeURIComponent(tagSlug(tag))}/`}>
+        {tag}
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .tag-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tag-links li {
+    max-inline-size: 100%;
+  }
+
+  .tag-links a {
+    display: block;
+    padding: 4px 10px;
+    border-radius: var(--semi-border-radius-medium);
+    background: var(--semi-color-fill-0);
+    overflow-wrap: anywhere;
+  }
+
+  .tag-links a:is(:hover, :focus-visible) {
+    background: var(--semi-color-fill-1);
+  }
+</style>

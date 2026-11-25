@@ -11,7 +11,14 @@ const posts = await getPublicPosts()
 <Layout title="文章" description="浏览已发布的前端开发笔记。">
   <main class="site-shell site-main content-page" id="main" tabindex="-1">
     <div class="page-stack">
-      <Title heading={1}>文章</Title>
+      <header class="page-heading">
+        <Title heading={1}>文章</Title>
+        <div>
+          <a class="site-link" href="/tags/">
+            浏览标签
+          </a>
+        </div>
+      </header>
       {posts.length ? (
         <PostList posts={posts.map(toPostSummary)} />
       ) : (

@@ -1,0 +1,27 @@
+---
+import { Title } from '@aifuxi/semi-ui-vue/typography'
+import PageEmpty from '../../components/PageEmpty.vue'
+import TagLinks from '../../components/TagLinks.astro'
+import Layout from '../../layouts/Layout.astro'
+import { getPublicTagGroups } from '../../lib/tags'
+
+const groups = await getPublicTagGroups()
+const tags = [...groups.keys()].sort((left, right) => left.localeCompare(right, 'zh-CN'))
+---
+
+<Layout title="标签" description="按标签浏览已发布的文章。">
+  <main class="site-shell site-main content-page" id="main" tabindex="-1">
+    <div class="page-stack">
+      <Title heading={1}>标签</Title>
+      {tags.length ? (
+        <TagLinks tags={tags} />
+      ) : (
+        <PageEmpty title="暂无文章标签">
+          <a class="site-action" href="/blog/">
+            浏览全部文章
+          </a>
+        </PageEmpty>
+      )}
+    </div>
+  </main>
+</Layout>

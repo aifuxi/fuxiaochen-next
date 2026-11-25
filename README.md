@@ -35,7 +35,7 @@ WebStorm 中可通过 mise 任务窗口或项目终端运行这些命令。启�
 
 ## 添加文章
 
-将 Markdown 或 MDX 放到 `src/content/posts/`。文章需要 `title`、`summary` 和 `publishedAt`（推荐 `YYYY-MM-DD`），可选 `topic`（`frontend`、`components` 或 `tooling`）和 `draft`。文件路径决定文章 URL，发布后应保持稳定。设置 `draft: true` 的文章会从公开页面和首页搜索中排除。
+将 Markdown 或 MDX 放到 `src/content/posts/`。文章需要 `title`、`summary` 和 `publishedAt`（推荐 `YYYY-MM-DD`），可选 `topic`（`frontend`、`components` 或 `tooling`）、`tags`（例如 `[Debian 12, 服务器初始化]`）和 `draft`。公开文章的标签会出现在 `/tags/`，标签按原名称区分大小写。文件路径决定文章 URL，发布后应保持稳定。设置 `draft: true` 的文章会从公开页面和首页搜索中排除。
 
 ## 代码质量与提交
 
