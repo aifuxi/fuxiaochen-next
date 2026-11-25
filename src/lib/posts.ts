@@ -3,6 +3,11 @@ import { topics } from '../config/site'
 
 export async function getPublicPosts() {
   const posts = await getCollection('posts', ({ data }) => !data.draft)
+  const reserved = posts.find(({ id }) => /^page\/\d+$/i.test(id))
+
+  if (reserved) {
+    throw new Error(`文章路径 ${postPath(reserved.id)} 保留用于列表分页，请修改该文章的 slug。`)
+  }
 
   return posts.sort(
     (left, right) =>
