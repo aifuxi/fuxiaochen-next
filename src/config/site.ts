@@ -19,6 +19,14 @@ export const site = {
   ],
 }
 
+export const siteIntegrations = {
+  origin: 'https://fuxiaochen.com',
+  googleVerification: 'DTiRVawomypV2iRoz9UUw2P0wAxnPs-kffJl6MNevdM',
+  baiduVerification: 'codeva-45RBuxCNYZ',
+  googleAnalyticsId: 'G-K7EEM4013Q',
+  baiduAnalyticsId: 'b61b9530321f9a7262c25dcf3b398562',
+}
+
 export const topics = [
   { id: 'frontend', title: '前端工程', summary: '构建、渲染与交互' },
   { id: 'components', title: '组件库', summary: '组件设计与主题' },

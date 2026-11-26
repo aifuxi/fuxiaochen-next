@@ -10,7 +10,8 @@ import { Text } from '@aifuxi/semi-ui-vue/typography'
 import BrandLogo from '../assets/brand-logo.svg'
 import ThemeMenu from '../components/islands/ThemeMenu.vue'
 import ModernTheme from '../components/ModernTheme.astro'
-import { site } from '../config/site'
+import SiteAnalytics from '../components/SiteAnalytics.astro'
+import { site, siteIntegrations } from '../config/site'
 import '../styles/site.css'
 
 interface Props {
@@ -28,6 +29,7 @@ const { title, description, noindex, article } = Astro.props
 const pageTitle = title ? `${title} · ${site.name}` : site.name
 const currentPath = Astro.url.pathname.replace(/\/?$/, '/')
 const canonical = !noindex && Astro.site && new URL(currentPath, Astro.site)
+const isProductionSite = import.meta.env.PROD && Astro.site?.origin === siteIntegrations.origin
 const image = article?.image ?? { src: '/apple-icon.png', alt: site.name }
 const imageUrl = canonical ? new URL(image.src, canonical).href : undefined
 
@@ -76,6 +78,12 @@ const navigation = [
     </script>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
+    {isProductionSite && currentPath === '/' && (
+      <>
+        <meta name="google-site-verification" content={siteIntegrations.googleVerification} />
+        <meta name="baidu-site-verification" content={siteIntegrations.baiduVerification} />
+      </>
+    )}
     {canonical && (
       <>
         <link rel="canonical" href={canonical.href} />
@@ -198,6 +206,7 @@ const navigation = [
         }).observe(header)
       }
     </script>
+    {isProductionSite && <SiteAnalytics />}
   </body>
 </html>
 

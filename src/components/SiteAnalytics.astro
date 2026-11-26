@@ -1,0 +1,34 @@
+---
+import { siteIntegrations } from '../config/site'
+
+const { origin, googleAnalyticsId, baiduAnalyticsId } = siteIntegrations
+---
+
+<script define:vars={{ origin, googleAnalyticsId, baiduAnalyticsId }}>
+  if (window.location.origin === origin) {
+    window.dataLayer ??= []
+
+    window.gtag = function () {
+      // eslint-disable-next-line prefer-rest-params -- 保留 Google tag 官方队列项格式。
+      window.dataLayer.push(arguments)
+    }
+
+    window.gtag('js', new Date())
+    window.gtag('config', googleAnalyticsId)
+
+    window._hmt ??= []
+
+    const scriptUrls = [
+      `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`,
+      `https://hm.baidu.com/hm.js?${baiduAnalyticsId}`,
+    ]
+
+    for (const url of scriptUrls) {
+      const script = document.createElement('script')
+      script.async = true
+      script.setAttribute('fetchpriority', 'low')
+      script.src = url
+      document.head.append(script)
+    }
+  }
+</script>
