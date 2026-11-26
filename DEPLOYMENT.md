@@ -201,13 +201,13 @@ curl -fsSI 'https://www.fuxiaochen.com/blog/?ref=check'
 
 在该环境中添加以下 Variables 和 Secrets。使用第 1 步中已确认的连接信息。
 
-| 类型     | 名称                     | 取值                                       |
-| -------- | ------------------------ | ------------------------------------------ |
-| Variable | `DEPLOY_SSH_HOST`        | 本机变量 `ssh_host` 的值                   |
-| Variable | `DEPLOY_SSH_PORT`        | 本机变量 `ssh_port` 的值，默认 `22` 可省略 |
-| Variable | `DEPLOY_SSH_USER`        | 本机变量 `deploy_user` 的值                |
-| Secret   | `DEPLOY_SSH_KEY`         | 第 1 步生成的私钥文件的完整内容            |
-| Secret   | `DEPLOY_SSH_KNOWN_HOSTS` | 第 3 步生成的 `known_hosts` 文件的完整一行 |
+| 类型     | 名称                     | 取值                                                                         |
+| -------- | ------------------------ | ---------------------------------------------------------------------------- |
+| Variable | `DEPLOY_SSH_HOST`        | 本机变量 `ssh_host` 的值                                                     |
+| Variable | `DEPLOY_SSH_PORT`        | 本机变量 `ssh_port` 的值，默认 `22` 可省略                                   |
+| Variable | `DEPLOY_SSH_USER`        | 本机变量 `deploy_user` 的值                                                  |
+| Secret   | `DEPLOY_SSH_KEY`         | 第 1 步生成的本机私钥 `~/.ssh/fuxiaochen-next-deploy` 的完整内容             |
+| Secret   | `DEPLOY_SSH_KNOWN_HOSTS` | 第 3 步生成的本机文件 `~/.ssh/fuxiaochen-next-deploy.known_hosts` 的完整一行 |
 
 ## 7. 触发首次发布并验收
 
