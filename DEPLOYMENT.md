@@ -199,15 +199,15 @@ curl -fsSI 'https://www.fuxiaochen.com/blog/?ref=check'
 
 在 **GitHub 仓库网页**上，以有权管理仓库环境的账号打开 **Settings → Environments → production**。没有该环境时先创建，并将可部署分支限制为 `master`。
 
-在该环境中添加以下 Variables 和 Secrets。使用第 1 步中已确认的连接信息。
+在该环境中添加以下 Variables 和 Secrets。地址、端口和账号使用第 3 步试登录成功时的取值。
 
-| 类型     | 名称                     | 取值                                                                         |
-| -------- | ------------------------ | ---------------------------------------------------------------------------- |
-| Variable | `DEPLOY_SSH_HOST`        | 本机变量 `ssh_host` 的值                                                     |
-| Variable | `DEPLOY_SSH_PORT`        | 本机变量 `ssh_port` 的值，默认 `22` 可省略                                   |
-| Variable | `DEPLOY_SSH_USER`        | 本机变量 `deploy_user` 的值                                                  |
-| Secret   | `DEPLOY_SSH_KEY`         | 第 1 步生成的本机私钥 `~/.ssh/fuxiaochen-next-deploy` 的完整内容             |
-| Secret   | `DEPLOY_SSH_KNOWN_HOSTS` | 第 3 步生成的本机文件 `~/.ssh/fuxiaochen-next-deploy.known_hosts` 的完整一行 |
+| 类型     | 名称                     | 取值                                                                                         |
+| -------- | ------------------------ | -------------------------------------------------------------------------------------------- |
+| Variable | `DEPLOY_SSH_HOST`        | Runner 用来连接服务器 SSH 的 IP 或主机名，例如 `203.0.113.10` 或 `ssh.example.com`。只填地址 |
+| Variable | `DEPLOY_SSH_PORT`        | 从外部连接服务器 SSH 时使用的端口，例如 `2222`。使用默认端口 `22` 时可省略                   |
+| Variable | `DEPLOY_SSH_USER`        | 服务器上安装了发布公钥的 Linux 账号名，例如 `site-deploy`                                    |
+| Secret   | `DEPLOY_SSH_KEY`         | 第 1 步生成的本机私钥 `~/.ssh/fuxiaochen-next-deploy` 的完整内容                             |
+| Secret   | `DEPLOY_SSH_KNOWN_HOSTS` | 第 3 步生成的本机文件 `~/.ssh/fuxiaochen-next-deploy.known_hosts` 的完整一行                 |
 
 ## 7. 触发首次发布并验收
 
