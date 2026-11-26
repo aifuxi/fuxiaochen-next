@@ -1,0 +1,76 @@
+---
+import { Paragraph, Title } from '@aifuxi/semi-ui-vue/typography'
+import { friends } from '../config/friends'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="友链" description="浏览本站推荐的独立站点。">
+  <main class="site-shell site-main content-page" id="main" tabindex="-1">
+    <div class="page-stack">
+      <Title heading={1}>友链</Title>
+      {friends.length ? (
+        <ul class="friend-list" role="list">
+          {friends.map(({ name, url, description, avatar }) => (
+            <li class="friend-item">
+              {avatar && (
+                <img
+                  class="friend-avatar"
+                  src={avatar}
+                  width="40"
+                  height="40"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                />
+              )}
+              <div class="friend-details">
+                <Title heading={2}>
+                  <a class="site-link" href={url}>
+                    {name}
+                  </a>
+                </Title>
+                <Paragraph type="secondary">{description}</Paragraph>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <Paragraph type="secondary">暂无友链。</Paragraph>
+      )}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .friend-list {
+    margin: 0;
+    padding: 0;
+    border-block-start: 1px solid var(--semi-color-border);
+    list-style: none;
+  }
+
+  .friend-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-block: 16px;
+    border-block-end: 1px solid var(--semi-color-border);
+  }
+
+  .friend-avatar {
+    flex: none;
+    border-radius: var(--semi-border-radius-medium);
+    object-fit: contain;
+  }
+
+  .friend-details {
+    display: grid;
+    min-inline-size: 0;
+    gap: 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .friend-details :global(h2) {
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+</style>

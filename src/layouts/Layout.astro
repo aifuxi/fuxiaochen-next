@@ -156,12 +156,19 @@ const navigation = [
         </div>
       </LayoutHeader>
       <slot />
-      <LayoutFooter tagName="footer" class="site-footer">
+      <LayoutFooter tagName="footer" role="contentinfo" class="site-footer">
         <div class="site-shell site-bar footer-bar">
           <div class="footer-links">
             <Text type="secondary">{site.author}</Text>
             <a href={site.rssPath} class="site-link">
               RSS 订阅
+            </a>
+            <a
+              href="/friends/"
+              class="site-link"
+              aria-current={currentPath === '/friends/' ? 'page' : undefined}
+            >
+              友链
             </a>
           </div>
           <ul class="footer-filings" role="list" aria-label="网站备案">
