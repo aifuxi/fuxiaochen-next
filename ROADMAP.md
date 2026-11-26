@@ -57,3 +57,4 @@
 
 - 静态友链页于 2026-11-26 上线，发布提交为 `c807879`。构建生成 `/friends/`，全站页脚提供入口，首条友链从旧站备份迁入。本地已验证窄屏布局、明暗主题，以及禁用 JavaScript 时用键盘访问友链和打开目标站点。[友链需求](REQUIREMENTS.md#友链) · [友链名单](src/config/friends.ts)
 - GitHub Actions 的 6 项线上回归测试通过。正式域名的首页、文章详情、关于和友链页均返回 `200`，页脚入口均指向 `/friends/`。在浏览器中从首页页脚打开友链页，确认站名、简介和头像正常显示。[发布记录](https://github.com/aifuxi/fuxiaochen-next/actions/runs/45757734997) · [线上友链页](https://fuxiaochen.com/friends/)
+- **恢复站点验证与访问统计（待开发）**。恢复 Google Search Console 和百度搜索资源平台的站点验证，沿用旧站的 GA4 和百度统计 ID。上线后核对正式域名首页的验证标签，并确认访问事件发往各自原有的统计 ID。
