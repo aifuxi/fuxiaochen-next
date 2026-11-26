@@ -52,3 +52,7 @@
 | `/blog/debian-12-server-setup/` | 100 | 100  | 1.54 s | 0   |
 
 - 实地 Core Web Vitals 有足够线上样本后再记录。
+
+## 上线后增量
+
+- 静态友链页待开发。交付 `/friends/`、全站页脚入口和仓库内维护的名单。生产构建后验证窄屏布局、明暗主题，以及禁用 JavaScript 时能否阅读名单并打开链接。[友链需求](REQUIREMENTS.md#友链)
